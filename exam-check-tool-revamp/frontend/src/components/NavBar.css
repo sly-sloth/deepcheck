@@ -1,0 +1,73 @@
+.btn, .btn:hover, .btn:focus, .student-navbar-btn, .student-navbar-btn:hover, .student-navbar-btn:focus {
+  cursor: pointer !important;
+}
+
+.student-navbar-btn:hover, .student-navbar-btn:focus {
+  background: linear-gradient(135deg, #a86eda 60%, #9B59B6 100%);
+  color: #fff !important;
+  border-color: #a86eda !important;
+  box-shadow: 0 4px 18px #9B59B688, 0 1.5px 0 #fff2 inset;
+}
+
+.student-navbar-btn {
+  background: linear-gradient(135deg, #9B59B6 60%, #8f44ad 100%);
+  color: #fff !important;
+  border: 2px solid #9B59B6 !important;
+  box-shadow: 0 2px 12px #9B59B644, 0 1.5px 0 #fff2 inset;
+  transition: all 0.2s;
+}
+
+.custom-navbar-black, .custom-navbar-black .container, .custom-navbar-black .container-fluid {
+  background: #141417 !important;
+  background-color: #141417 !important;
+}
+
+.profile-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #181824;
+  box-shadow: 0 2px 8px #1e90ff22;
+  border: 2px solid #1e90ff;
+  transition: box-shadow 0.2s, border 0.2s;
+  cursor: pointer;
+}
+.profile-circle:hover, .profile-dropdown.show .profile-circle {
+  box-shadow: 0 4px 16px #1e90ff55;
+  border: 2.5px solid #00e676;
+}
+
+.profile-dropdown .dropdown-toggle::after {
+  display: none;
+}
+
+.profile-dropdown-menu {
+  background: #181824 !important;
+  border: 1.5px solid #1e90ff;
+  min-width: 140px;
+  margin-top: 8px !important;
+  box-shadow: 0 4px 24px #1e90ff22;
+}
+.profile-dropdown-menu .dropdown-item {
+  color: #fff;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+.profile-dropdown-menu .dropdown-item:hover, .profile-dropdown-menu .dropdown-item:focus {
+  background: #1e90ff;
+  color: #fff;
+}
+
+/* Show dropdown on hover */
+.profile-dropdown:hover .dropdown-menu, .profile-dropdown.show .dropdown-menu {
+  display: block;
+}
+
+button, .btn, .student-navbar-btn, .profile-circle {
+  cursor: pointer !important;
+} 
