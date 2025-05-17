@@ -1,0 +1,102 @@
+[
+  {
+    "id": "242c893b-e6ea-4830-b7a0-417fd338473f",
+    "username": "vaibhav",
+    "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "role": "student"
+  },
+  {
+    "id": "9b6a3cb1-ec21-447e-aa77-32e641de02a4",
+    "username": "vaibhav0",
+    "password_hash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "student",
+    "name": "Vaibhav Sharma",
+    "branch": "Mathematics and Computing",
+    "rollNo": "2021UCM2348",
+    "department": "Computer Science Engineering",
+    "degree": "B.Tech.",
+    "semester": "8"
+  },
+  {
+    "id": "3c24eb7e-ab2f-41d2-8eed-c43c78ab969e",
+    "username": "teacher",
+    "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "role": "teacher",
+    "name": "Vijay Kumar Bohat",
+    "branch": "",
+    "rollNo": "",
+    "department": "Computer Science Engineering",
+    "degree": "",
+    "semester": "",
+    "designation": "Assistant Professor"
+  },
+  {
+    "id": "21e64502-3bf8-46a0-be2d-ebf36a9c62ff",
+    "username": "teacher2",
+    "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "role": "teacher"
+  },
+  {
+    "id": "admin_user_id",
+    "username": "admin",
+    "password_hash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "admin"
+  },
+  {
+    "id": "45727097-fb84-49de-8cc2-73943b35c2a8",
+    "username": "vaibhav2",
+    "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "role": "student",
+    "name": "Vaibhav Sharma",
+    "branch": "MAC",
+    "rollNo": "56",
+    "department": "Information Technology",
+    "degree": "B.Tech."
+  },
+  {
+    "id": "61343b6a-e0a0-4c4b-8db7-247fe0ef9d52",
+    "username": "krish",
+    "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "role": "student",
+    "name": "Krish Chawla",
+    "branch": "MAC",
+    "rollNo": "12",
+    "department": "Computer Science Engineering",
+    "degree": "B.Tech."
+  },
+  {
+    "id": "d771f3b2-c17f-4a76-8eba-b56c48a11a19",
+    "username": "daksh",
+    "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "role": "student",
+    "name": "Daksh Singhal",
+    "branch": "MAC",
+    "rollNo": "123",
+    "department": "Computer Science Engineering",
+    "degree": "B.Tech.",
+    "semester": "8"
+  },
+  {
+    "id": "b4f6e724-df3f-49c9-8644-23c5e53d6cfe",
+    "username": "daksh2",
+    "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "role": "student",
+    "name": "Daksh",
+    "branch": "EE",
+    "rollNo": "45",
+    "department": "Electrical Engineering",
+    "degree": "M.Tech."
+  },
+  {
+    "id": "d1ce442d-327e-42d7-abb0-50727a4c10b4",
+    "username": "krish3",
+    "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "role": "student",
+    "name": "Krish Chawla",
+    "branch": "BT",
+    "rollNo": "56",
+    "department": "Computer Science Engineering",
+    "degree": "B.Tech.",
+    "semester": "4"
+  }
+]

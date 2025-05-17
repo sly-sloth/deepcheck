@@ -1,0 +1,55 @@
+{
+    "exam_marking_schema": [
+        [
+            [
+                "The concept of recursion is clearly explained by the student.",
+                2
+            ],
+            [
+                "The code is syntax wise and logic wise correct.",
+                2
+            ]
+        ],
+        [
+            [
+                "The student provided the correct meaning of the word pointer in terms of a programing language",
+                2
+            ],
+            [
+                "The student gave a correct explanation to the example of how can we access the elements of an array using pointers.",
+                1
+            ],
+            [
+                "The student used C++ language specifically to code for demonstrating how can we access the elements of an array using pointers",
+                1
+            ],
+            [
+                "The student wrote a syntax wise and logic wise correct C++ code for demonstrating how can we access the elements of an array using pointers",
+                2
+            ],
+            [
+                "The student wrote a code in C++ for swapping 2 numbers using pointers",
+                1
+            ],
+            [
+                "The student wrote a syntax wise and logic wise correct code for swapping 2 numbers using pointer",
+                2
+            ]
+        ],
+        [
+            [
+                "The student should correctly define Object Oriented Programing.",
+                1
+            ],
+            [
+                "The student should name and define all the 4 pillars of Object Oriented Programming correctly.",
+                2
+            ],
+            [
+                "The student should be able to provide correct examples for all the 4 pillars of Object Oriented Programming correctly.",
+                2
+            ]
+
+        ]
+    ]
+}

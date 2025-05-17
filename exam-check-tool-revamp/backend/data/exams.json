@@ -1,0 +1,171 @@
+[
+  {
+    "id": "4227dab4-cfa4-4e3e-afbe-cd0da5cf4a02",
+    "title": "CS",
+    "duration": "30",
+    "description": "CS exam.",
+    "instructions": "",
+    "questions": [
+      {
+        "type": "Subjective",
+        "text": "explain cs ki full form",
+        "options": [],
+        "related_theory": "cs full is computer science",
+        "marks": "1",
+        "marking_scheme": [
+          [
+            "check if full form is correct or not",
+            1
+          ]
+        ]
+      }
+    ],
+    "teacher": "teacher2"
+  },
+  {
+    "id": "eab8dc1a-6d0e-4a9f-bfcb-866a1b9989eb",
+    "title": "Computer Science Test",
+    "duration": "30",
+    "description": "A sample CS exam.",
+    "instructions": "Answer all questions.",
+    "questions": [
+      {
+        "type": "Subjective",
+        "text": "Explain the concept of recursion. Illustrate this by writing the code for calculating the factorial of a number.",
+        "options": [],
+        "related_theory": "Recursion is a fundamental programming concept where a function calls itself to solve a problem. Instead of using loops or iterative methods, recursion solves a problem by breaking it down into smaller subproblems of the same type. Each recursive call works on a reduced version of the original problem until it reaches a stopping condition, known as the base case.  \\n\\nThe base case is a condition that stops the recursive function from calling itself indefinitely. Without a base case, recursion would continue infinitely, leading to a stack overflow error. The recursive case is where the function calls itself with a modified argument that brings it closer to the base case.  \\n\\nWhen a recursive function is called, the execution of the current function is paused, and a new instance of the function is executed with a new parameter. These function calls are stored in the system\\u2019s function call stack. When the base case is reached, the function starts returning results in a last in, first out order, meaning the most recent function call resolves first.  \\n\\nRecursion can be understood using the example of factorial calculation. Factorial is a mathematical operation that multiplies a number by all the positive integers less than it down to one. The recursive approach to factorial follows a structured pattern where the base case occurs when the number reaches zero, where the factorial of zero is defined as one. Otherwise, the function calls itself with the number reduced by one until it reaches the base case.  \\n\\nThe steps of recursive execution are as follows:  \\n\\n1. The function is called with an initial value.  \\n2. If the value is zero, the function returns one, which serves as the base case.  \\n3. Otherwise, the function calls itself with a reduced value.  \\n4. This process continues until the base case is reached.  \\n5. Once the base case is reached, the function starts returning values and resolves each previous function call in order.  \\n\\nRecursion has several advantages. It simplifies problem-solving by breaking down complex problems into smaller subproblems. It is useful for tree and graph traversals, such as depth-first search, and it provides an elegant and easier-to-understand approach for problems that have a natural recursive structure.  \\n\\nHowever, recursion also has disadvantages. It consumes more memory because each function call is stored in the call stack until the base case is reached. It can lead to stack overflow errors if the recursion depth is too large. It is also generally slower than iterative solutions because function calls and returns add overhead to execution time.  \\n\\nRecursive functions can be optimized in various ways. Tail recursion can be used to optimize recursion by ensuring that the recursive call is the last operation performed. Some compilers can optimize tail-recursive functions to avoid excessive memory usage. Memoization can be used to store previously computed results, preventing redundant calculations and improving efficiency.  \\n\\nRecursion is a powerful technique but should be used with caution to ensure optimal performance and avoid unnecessary memory consumption.",
+        "marks": "4",
+        "marking_scheme": [
+          [
+            "The concept of recursion is clearly explained by the student.",
+            2
+          ],
+          [
+            "The code is syntax wise and logic wise correct.",
+            2
+          ]
+        ]
+      },
+      {
+        "type": "Subjective",
+        "text": "What is Object Oriented Programming? Explain the four pillars of Object Oriented Programming and provide examples for each. Write codes to demonstrate each pillar.",
+        "options": [],
+        "related_theory": "Object-Oriented Programming (OOP) is a programming paradigm based on the concept of \\\"objects,\\\" which can contain data and methods to manipulate that data. It allows for better code organization, reusability, and scalability. OOP is used in many modern programming languages, including C++, Java, and Python.  \\n\\n Four Pillars of Object-Oriented Programming  \\n\\nOOP is based on four fundamental principles:  \\n\\n1. Encapsulation  \\n2. Abstraction  \\n3. Inheritance  \\n4. Polymorphism  \\n\\n 1. Encapsulation  \\nEncapsulation is the principle of bundling data (variables) and methods (functions) that operate on the data into a single unit called a class. It restricts direct access to some of an object's components, which helps prevent unintended modifications.  \\n\\nExample: Encapsulation in C++  \\n```cpp\\ninclude <iostream>\\nusing namespace std;\\n\\nclass BankAccount {\\nprivate:\\n    double balance; // Private variable, cannot be accessed directly\\n\\npublic:\\n    BankAccount(double initialBalance) { // Constructor\\n        balance = initialBalance;\\n    }\\n\\n    void deposit(double amount) { // Public method to add money\\n        balance += amount;\\n    }\\n\\n    void withdraw(double amount) { // Public method to withdraw money\\n        if (amount <= balance) {\\n            balance -= amount;\\n        } else {\\n            cout << \\\"Insufficient balance\\\" << endl;\\n        }\\n    }\\n\\n    double getBalance() { // Public method to access balance\\n        return balance;\\n    }\\n};\\n\\nint main() {\\n    BankAccount account(1000); // Create an object of BankAccount\\n    account.deposit(500);\\n    account.withdraw(300);\\n    cout << \\\"Current Balance: \\\" << account.getBalance() << endl;\\n    return 0;\\n}\\n```\\nExplanation:  \\n- The `balance` variable is private, so it cannot be accessed directly from outside the class.  \\n- The `deposit`, `withdraw`, and `getBalance` methods allow controlled access to `balance`.  \\n- Encapsulation ensures that `balance` cannot be modified directly, enforcing security.  \\n\\n 2. Abstraction  \\nAbstraction is the process of hiding implementation details and exposing only necessary functionalities. It reduces complexity by allowing users to interact with an object without understanding its internal workings.  \\n\\nExample: Abstraction in C++  \\n```cpp\\ninclude <iostream>\\nusing namespace std;\\n\\nclass Car {\\npublic:\\n    void start() { // Public method to start the car\\n        igniteEngine();\\n        accelerate();\\n        cout << \\\"Car started\\\" << endl;\\n    }\\n\\nprivate:\\n    void igniteEngine() { // Internal function hidden from users\\n        cout << \\\"Engine ignited\\\" << endl;\\n    }\\n\\n    void accelerate() { // Internal function hidden from users\\n        cout << \\\"Car accelerating\\\" << endl;\\n    }\\n};\\n\\nint main() {\\n    Car myCar;\\n    myCar.start(); // The user only calls start, not the internal methods\\n    return 0;\\n}\\n```\\nExplanation:  \\n- The `start` method is public, while `igniteEngine` and `accelerate` are private.  \\n- The user only needs to call `start`, without worrying about how the engine ignites or how acceleration works.  \\n- This simplifies interaction with the `Car` class, making it easier to use.  \\n\\n 3. Inheritance  \\nInheritance allows one class to derive properties and behaviors from another class. It promotes code reusability and a hierarchical relationship between classes.  \\n\\nExample: Inheritance in C++  \\n```cpp\\ninclude <iostream>\\nusing namespace std;\\n\\nclass Animal {\\npublic:\\n    void eat() {\\n        cout << \\\"This animal is eating\\\" << endl;\\n    }\\n};\\n\\nclass Dog : public Animal { // Dog class inherits from Animal\\npublic:\\n    void bark() {\\n        cout << \\\"The dog is barking\\\" << endl;\\n    }\\n};\\n\\nint main() {\\n    Dog myDog;\\n    myDog.eat(); // Inherited from Animal\\n    myDog.bark(); // Defined in Dog class\\n    return 0;\\n}\\n```\\nExplanation:  \\n- The `Dog` class inherits from the `Animal` class.  \\n- The `Dog` class can access the `eat` method from `Animal` without redefining it.  \\n- This eliminates code duplication and allows the reuse of `Animal` class functionality.  \\n\\n 4. Polymorphism  \\nPolymorphism allows methods to take different forms, enabling code flexibility and maintainability. It can be achieved through function overloading and method overriding.  \\n\\n Function Overloading (Compile-time Polymorphism)  \\nFunction overloading allows multiple functions with the same name but different parameters.  \\n\\nExample: Function Overloading in C++  \\n```cpp\\ninclude <iostream>\\nusing namespace std;\\n\\nclass MathOperations {\\npublic:\\n    int add(int a, int b) {\\n        return a + b;\\n    }\\n\\n    double add(double a, double b) {\\n        return a + b;\\n    }\\n};\\n\\nint main() {\\n    MathOperations math;\\n    cout << \\\"Addition of integers: \\\" << math.add(5, 10) << endl;\\n    cout << \\\"Addition of doubles: \\\" << math.add(5.5, 2.2) << endl;\\n    return 0;\\n}\\n```\\nExplanation:  \\n- There are two `add` methods, one for integers and one for doubles.  \\n- The compiler determines which method to call based on the arguments passed.  \\n\\n Method Overriding (Run-time Polymorphism)  \\nMethod overriding allows a derived class to provide a specific implementation of a function that is already defined in its base class.  \\n\\nExample: Method Overriding in C++  \\n```cpp\\ninclude <iostream>\\nusing namespace std;\\n\\nclass Animal {\\npublic:\\n    virtual void makeSound() { // Virtual function for overriding\\n        cout << \\\"Animal makes a sound\\\" << endl;\\n    }\\n};\\n\\nclass Dog : public Animal {\\npublic:\\n    void makeSound() override { // Overriding base class method\\n        cout << \\\"Dog barks\\\" << endl;\\n    }\\n};\\n\\nint main() {\\n    Animal* animalPtr;\\n    Dog myDog;\\n    animalPtr = &myDog;\\n    \\n    animalPtr->makeSound(); // Calls Dog's overridden function due to polymorphism\\n    return 0;\\n}\\n```\\nExplanation:  \\n- The `makeSound` function is declared as `virtual` in the base class.  \\n- The `Dog` class overrides `makeSound` with its own implementation.  \\n- The function call is determined at runtime, allowing different behaviors based on the object type.  \\n\\n Summary  \\nObject-Oriented Programming (OOP) is a programming paradigm that improves code organization, reusability, and scalability. The four pillars of OOP are:  \\n\\n1. Encapsulation: Hides internal data and provides controlled access using public methods.  \\n2. Abstraction: Hides implementation details and exposes only necessary functionalities.  \\n3. Inheritance: Allows a class to inherit properties and behaviors from another class.  \\n4. Polymorphism: Enables a single function or method to take multiple forms, increasing flexibility.  \\n\\nEach of these concepts plays a crucial role in making programs modular, maintainable, and efficient.",
+        "marks": "5",
+        "marking_scheme": [
+          [
+            "The student should correctly define Object Oriented Programing.",
+            1
+          ],
+          [
+            "The student should name and define all the 4 pillars of Object Oriented Programming correctly.",
+            2
+          ],
+          [
+            "The student should be able to provide correct examples for all the 4 pillars of Object Oriented Programming correctly.",
+            2
+          ]
+        ]
+      }
+    ],
+    "teacher": "teacher"
+  },
+  {
+    "id": "07d6b552-71d9-4182-b26b-9be830dc120b",
+    "title": "Sample CS Exam",
+    "duration": "1",
+    "description": "Sample exam",
+    "instructions": "...",
+    "questions": [
+      {
+        "type": "Subjective",
+        "text": "Full form of CS?",
+        "options": [],
+        "related_theory": "Full form of CS is computer science.",
+        "marks": "1",
+        "marking_scheme": [
+          [
+            "correct full form of computer science",
+            1
+          ]
+        ]
+      }
+    ],
+    "teacher": "teacher"
+  },
+  {
+    "id": "bb8eb631-cd34-4f0c-bc07-22783e219337",
+    "title": "Algorithms Mid Sem",
+    "duration": "90",
+    "description": "Mid Sem examination of Algorithms course.",
+    "instructions": "Answer all questions completely.",
+    "questions": [
+      {
+        "type": "Subjective",
+        "text": "Explain the concept of recursion. Illustrate this by writing the code for calculating the factorial of a number.",
+        "options": [],
+        "related_theory": "Recursion is a fundamental programming concept where a function calls itself to solve a problem. Instead of using loops or iterative methods, recursion solves a problem by breaking it down into smaller sub problems of the same type. Each recursive call works on a reduced version of the original problem until it reaches a stopping condition, known as the base case.  \n\nThe base case is a condition that stops the recursive function from calling itself indefinitely. Without a base case, recursion would continue infinitely, leading to a stack overflow error. The recursive case is where the function calls itself with a modified argument that brings it closer to the base case.  \n\nWhen a recursive function is called, the execution of the current function is paused, and a new instance of the function is executed with a new parameter. These function calls are stored in the system\u2019s function call stack. When the base case is reached, the function starts returning results in a last in, first out order, meaning the most recent function call resolves first.  \n\nRecursion can be understood using the example of factorial calculation. Factorial is a mathematical operation that multiplies a number by all the positive integers less than it down to one. The recursive approach to factorial follows a structured pattern where the base case occurs when the number reaches zero, where the factorial of zero is defined as one. Otherwise, the function calls itself with the number reduced by one until it reaches the base case.  \n\nThe steps of recursive execution are as follows:  \n\n1. The function is called with an initial value.  \n2. If the value is zero, the function returns one, which serves as the base case.  \n3. Otherwise, the function calls itself with a reduced value.  \n4. This process continues until the base case is reached.  \n5. Once the base case is reached, the function starts returning values and resolves each previous function call in order.  \n\nRecursion has several advantages. It simplifies problem-solving by breaking down complex problems into smaller subproblems. It is useful for tree and graph traversals, such as depth-first search, and it provides an elegant and easier-to-understand approach for problems that have a natural recursive structure.  \n\nHowever, recursion also has disadvantages. It consumes more memory because each function call is stored in the call stack until the base case is reached. It can lead to stack overflow errors if the recursion depth is too large. It is also generally slower than iterative solutions because function calls and returns add overhead to execution time.  \n\nRecursive functions can be optimized in various ways. Tail recursion can be used to optimize recursion by ensuring that the recursive call is the last operation performed. Some compilers can optimize tail-recursive functions to avoid excessive memory usage. Memoization can be used to store previously computed results, preventing redundant calculations and improving efficiency.  \n\nRecursion is a powerful technique but should be used with caution to ensure optimal performance and avoid unnecessary memory consumption.",
+        "marks": "4",
+        "marking_scheme": [
+          [
+            "The concept of recursion is clearly explained by the student.",
+            2
+          ],
+          [
+            "The code is syntax wise and logic wise correct.",
+            2
+          ]
+        ]
+      }
+    ],
+    "teacher": "teacher"
+  },
+  {
+    "id": "7ede45a3-e2cc-43bb-baae-06af0113b154",
+    "title": "DSA Mid Sem",
+    "duration": "5",
+    "description": "DSA Mid Sem exam.",
+    "instructions": "Answer all questions.",
+    "questions": [
+      {
+        "type": "Subjective",
+        "text": "Explain the concept of recursion. Illustrate this by writing the code for calculating the factorial of a number.",
+        "options": [],
+        "related_theory": "Recursion is a fundamental programming concept where a function calls itself to solve a problem. Instead of using loops or iterative methods, recursion solves a problem by breaking it down into smaller subproblems of the same type. Each recursive call works on a reduced version of the original problem until it reaches a stopping condition, known as the base case.  \n\nThe base case is a condition that stops the recursive function from calling itself indefinitely. Without a base case, recursion would continue infinitely, leading to a stack overflow error. The recursive case is where the function calls itself with a modified argument that brings it closer to the base case.  \n\nWhen a recursive function is called, the execution of the current function is paused, and a new instance of the function is executed with a new parameter. These function calls are stored in the system\u2019s function call stack. When the base case is reached, the function starts returning results in a last in, first out order, meaning the most recent function call resolves first.  \n\nRecursion can be understood using the example of factorial calculation. Factorial is a mathematical operation that multiplies a number by all the positive integers less than it down to one. The recursive approach to factorial follows a structured pattern where the base case occurs when the number reaches zero, where the factorial of zero is defined as one. Otherwise, the function calls itself with the number reduced by one until it reaches the base case.  \n\nThe steps of recursive execution are as follows:  \n\n1. The function is called with an initial value.  \n2. If the value is zero, the function returns one, which serves as the base case.  \n3. Otherwise, the function calls itself with a reduced value.  \n4. This process continues until the base case is reached.  \n5. Once the base case is reached, the function starts returning values and resolves each previous function call in order.  \n\nRecursion has several advantages. It simplifies problem-solving by breaking down complex problems into smaller subproblems. It is useful for tree and graph traversals, such as depth-first search, and it provides an elegant and easier-to-understand approach for problems that have a natural recursive structure.  \n\nHowever, recursion also has disadvantages. It consumes more memory because each function call is stored in the call stack until the base case is reached. It can lead to stack overflow errors if the recursion depth is too large. It is also generally slower than iterative solutions because function calls and returns add overhead to execution time.  \n\nRecursive functions can be optimized in various ways. Tail recursion can be used to optimize recursion by ensuring that the recursive call is the last operation performed. Some compilers can optimize tail-recursive functions to avoid excessive memory usage. Memoization can be used to store previously computed results, preventing redundant calculations and improving efficiency.  \n\nRecursion is a powerful technique but should be used with caution to ensure optimal performance and avoid unnecessary memory consumption.",
+        "marks": "4",
+        "marking_scheme": [
+          [
+            "The concept of recursion is clearly explained by the student.",
+            2
+          ],
+          [
+            "The code is syntax wise and logic wise correct.",
+            2
+          ]
+        ]
+      },
+      {
+        "type": "Subjective",
+        "text": "What is Object Oriented Programming? Explain the four pillars of Object Oriented Programming and provide examples for each. Write codes to demonstrate each pillar.",
+        "options": [],
+        "related_theory": "Object-Oriented Programming (OOP) is a programming paradigm based on the concept of \\\"objects,\\\" which can contain data and methods to manipulate that data. It allows for better code organization, reusability, and scalability. OOP is used in many modern programming languages, including C++, Java, and Python.  \\n\\n Four Pillars of Object-Oriented Programming  \\n\\nOOP is based on four fundamental principles:  \\n\\n1. Encapsulation  \\n2. Abstraction  \\n3. Inheritance  \\n4. Polymorphism  \\n\\n 1. Encapsulation  \\nEncapsulation is the principle of bundling data (variables) and methods (functions) that operate on the data into a single unit called a class. It restricts direct access to some of an object's components, which helps prevent unintended modifications.  \\n\\nExample: Encapsulation in C++  \\n```cpp\\ninclude <iostream>\\nusing namespace std;\\n\\nclass BankAccount {\\nprivate:\\n    double balance; // Private variable, cannot be accessed directly\\n\\npublic:\\n    BankAccount(double initialBalance) { // Constructor\\n        balance = initialBalance;\\n    }\\n\\n    void deposit(double amount) { // Public method to add money\\n        balance += amount;\\n    }\\n\\n    void withdraw(double amount) { // Public method to withdraw money\\n        if (amount <= balance) {\\n            balance -= amount;\\n        } else {\\n            cout << \\\"Insufficient balance\\\" << endl;\\n        }\\n    }\\n\\n    double getBalance() { // Public method to access balance\\n        return balance;\\n    }\\n};\\n\\nint main() {\\n    BankAccount account(1000); // Create an object of BankAccount\\n    account.deposit(500);\\n    account.withdraw(300);\\n    cout << \\\"Current Balance: \\\" << account.getBalance() << endl;\\n    return 0;\\n}\\n```\\nExplanation:  \\n- The `balance` variable is private, so it cannot be accessed directly from outside the class.  \\n- The `deposit`, `withdraw`, and `getBalance` methods allow controlled access to `balance`.  \\n- Encapsulation ensures that `balance` cannot be modified directly, enforcing security.  \\n\\n 2. Abstraction  \\nAbstraction is the process of hiding implementation details and exposing only necessary functionalities. It reduces complexity by allowing users to interact with an object without understanding its internal workings.  \\n\\nExample: Abstraction in C++  \\n```cpp\\ninclude <iostream>\\nusing namespace std;\\n\\nclass Car {\\npublic:\\n    void start() { // Public method to start the car\\n        igniteEngine();\\n        accelerate();\\n        cout << \\\"Car started\\\" << endl;\\n    }\\n\\nprivate:\\n    void igniteEngine() { // Internal function hidden from users\\n        cout << \\\"Engine ignited\\\" << endl;\\n    }\\n\\n    void accelerate() { // Internal function hidden from users\\n        cout << \\\"Car accelerating\\\" << endl;\\n    }\\n};\\n\\nint main() {\\n    Car myCar;\\n    myCar.start(); // The user only calls start, not the internal methods\\n    return 0;\\n}\\n```\\nExplanation:  \\n- The `start` method is public, while `igniteEngine` and `accelerate` are private.  \\n- The user only needs to call `start`, without worrying about how the engine ignites or how acceleration works.  \\n- This simplifies interaction with the `Car` class, making it easier to use.  \\n\\n 3. Inheritance  \\nInheritance allows one class to derive properties and behaviors from another class. It promotes code reusability and a hierarchical relationship between classes.  \\n\\nExample: Inheritance in C++  \\n```cpp\\ninclude <iostream>\\nusing namespace std;\\n\\nclass Animal {\\npublic:\\n    void eat() {\\n        cout << \\\"This animal is eating\\\" << endl;\\n    }\\n};\\n\\nclass Dog : public Animal { // Dog class inherits from Animal\\npublic:\\n    void bark() {\\n        cout << \\\"The dog is barking\\\" << endl;\\n    }\\n};\\n\\nint main() {\\n    Dog myDog;\\n    myDog.eat(); // Inherited from Animal\\n    myDog.bark(); // Defined in Dog class\\n    return 0;\\n}\\n```\\nExplanation:  \\n- The `Dog` class inherits from the `Animal` class.  \\n- The `Dog` class can access the `eat` method from `Animal` without redefining it.  \\n- This eliminates code duplication and allows the reuse of `Animal` class functionality.  \\n\\n 4. Polymorphism  \\nPolymorphism allows methods to take different forms, enabling code flexibility and maintainability. It can be achieved through function overloading and method overriding.  \\n\\n Function Overloading (Compile-time Polymorphism)  \\nFunction overloading allows multiple functions with the same name but different parameters.  \\n\\nExample: Function Overloading in C++  \\n```cpp\\ninclude <iostream>\\nusing namespace std;\\n\\nclass MathOperations {\\npublic:\\n    int add(int a, int b) {\\n        return a + b;\\n    }\\n\\n    double add(double a, double b) {\\n        return a + b;\\n    }\\n};\\n\\nint main() {\\n    MathOperations math;\\n    cout << \\\"Addition of integers: \\\" << math.add(5, 10) << endl;\\n    cout << \\\"Addition of doubles: \\\" << math.add(5.5, 2.2) << endl;\\n    return 0;\\n}\\n```\\nExplanation:  \\n- There are two `add` methods, one for integers and one for doubles.  \\n- The compiler determines which method to call based on the arguments passed.  \\n\\n Method Overriding (Run-time Polymorphism)  \\nMethod overriding allows a derived class to provide a specific implementation of a function that is already defined in its base class.  \\n\\nExample: Method Overriding in C++  \\n```cpp\\ninclude <iostream>\\nusing namespace std;\\n\\nclass Animal {\\npublic:\\n    virtual void makeSound() { // Virtual function for overriding\\n        cout << \\\"Animal makes a sound\\\" << endl;\\n    }\\n};\\n\\nclass Dog : public Animal {\\npublic:\\n    void makeSound() override { // Overriding base class method\\n        cout << \\\"Dog barks\\\" << endl;\\n    }\\n};\\n\\nint main() {\\n    Animal* animalPtr;\\n    Dog myDog;\\n    animalPtr = &myDog;\\n    \\n    animalPtr->makeSound(); // Calls Dog's overridden function due to polymorphism\\n    return 0;\\n}\\n```\\nExplanation:  \\n- The `makeSound` function is declared as `virtual` in the base class.  \\n- The `Dog` class overrides `makeSound` with its own implementation.  \\n- The function call is determined at runtime, allowing different behaviors based on the object type.  \\n\\n Summary  \\nObject-Oriented Programming (OOP) is a programming paradigm that improves code organization, reusability, and scalability. The four pillars of OOP are:  \\n\\n1. Encapsulation: Hides internal data and provides controlled access using public methods.  \\n2. Abstraction: Hides implementation details and exposes only necessary functionalities.  \\n3. Inheritance: Allows a class to inherit properties and behaviors from another class.  \\n4. Polymorphism: Enables a single function or method to take multiple forms, increasing flexibility.  \\n\\nEach of these concepts plays a crucial role in making programs modular, maintainable, and efficient.\"",
+        "marks": "5",
+        "marking_scheme": [
+          [
+            "The student should correctly define Object Oriented Programing.",
+            1
+          ],
+          [
+            "The student should name and define all the 4 pillars of Object Oriented Programming correctly.",
+            2
+          ],
+          [
+            "The student should be able to provide correct examples for all the 4 pillars of Object Oriented Programming correctly.",
+            2
+          ]
+        ]
+      }
+    ],
+    "teacher": "teacher"
+  }
+]
