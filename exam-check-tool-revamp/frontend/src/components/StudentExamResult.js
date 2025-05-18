@@ -82,6 +82,11 @@ const StudentExamResult = () => {
   if (error) return <Alert variant="danger" style={{ marginTop: '100px' }}>{error}</Alert>;
   if (!result) return <div style={{ color: 'white', marginTop: '100px' }}>No result found.</div>;
 
+  // Calculate maximum marks from all questions
+  const maxMarks = result.results && result.results.length > 0
+    ? result.results.reduce((sum, q) => sum + (parseFloat(q.total_score_question) || 0), 0)
+    : 0;
+
   return (
     <Container className="p-4" style={{ marginTop: '100px', maxWidth: 900 }}>
       <Card style={{ backgroundColor: 'black', color: 'white', border: 'solid #1e90ff' }}>
@@ -89,6 +94,9 @@ const StudentExamResult = () => {
           <h2 style={{ color: '#1e90ff' }}>Exam Result</h2>
           <div className="mb-3">
             <h4>Total Score: <span style={{ color: '#00e676' }}>{result.total_score}</span></h4>
+            <div style={{ fontSize: 18, fontWeight: 500 }}>
+              Maximum Marks: <span style={{ color: '#1e90ff', fontWeight: 700 }}>{maxMarks}</span>
+            </div>
           </div>
           <div className="mb-4" style={{ borderBottom: '1px solid #333' }}></div>
           <div className="mt-4">
@@ -121,7 +129,7 @@ const StudentExamResult = () => {
                     marginTop: 8
                   }}>
                     <div style={{ color: '#bbb', fontWeight: 600, marginBottom: 4 }}>Your Answer:</div>
-                    <div>{q.student_answer}</div>
+                    <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', background: 'none', border: 'none', margin: 0, padding: 0 }}>{q.student_answer}</pre>
                   </div>
                   <div style={{ marginBottom: 8 }}><b>Feedback:</b>
                     <ul style={{ marginBottom: 0 }}>

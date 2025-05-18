@@ -1,0 +1,73 @@
+Question:
+Differentiate between lock-based concurrency control and timestamp-based concurrency control.
+
+====================================================================================
+
+Marks:
+3
+
+====================================================================================
+
+Relevant Theory:
+Concurrency control in a DBMS ensures that concurrent transactions produce a result equivalent to some serial execution, while allowing as much parallelism as possible.
+
+1.	Lock-Based Concurrency Control (Pessimistic)
+	– Locks and Lock Modes
+		• Shared (S) locks for reads (multiple transactions can hold them simultaneously)
+		• Exclusive (X) locks for writes (only one transaction at a time)
+	– Two-Phase Locking (2PL)
+		• Growing phase: transaction acquires locks but does not release any
+		• Shrinking phase: transaction releases locks but does not acquire any new ones
+		• Strict 2PL holds all exclusive locks until commit, simplifying recovery
+	– Deadlock Handling
+		• Use a wait-for graph to detect cycles
+		• Resolve by aborting one of the transactions in the deadlock
+		• Alternatively use prevention schemes (wait-die or wound-wait) or timeouts
+	– Pros and Cons
+		• Pros: Enforces strict serializability; recovery is easier under strict 2PL
+		• Cons: Transactions may block and wait indefinitely; deadlock detection adds overhead; throughput can suffer under high contention
+
+2.	Timestamp-Based Concurrency Control (Optimistic)
+	– Timestamps
+		• Each transaction T_i is assigned a unique timestamp TS(T_i) when it starts
+		• Each data item X keeps track of Read_TS(X) (highest timestamp of any reader) and Write_TS(X) (highest timestamp of any writer)
+	– Timestamp Ordering Protocol
+		• Read Rule: if TS(T_i) < Write_TS(X), abort T_i; otherwise allow the read and update Read_TS(X)
+		• Write Rule: if TS(T_i) < Read_TS(X), abort T_i; if TS(T_i) < Write_TS(X), ignore the write (Thomas’s rule); otherwise allow the write and update Write_TS(X)
+	– No Waiting or Deadlocks
+		• Transactions never block; they either proceed or are aborted immediately
+	– Pros and Cons
+		• Pros: No deadlocks; no waiting, so works well in low-contention environments
+		• Cons: High abort rate under contention, wasting work; more complex timestamp management
+
+3.	Key Differences Between the Two Approaches
+	– Conflict resolution:
+	Lock-based uses blocking and waits; timestamp-based uses immediate aborts with no waiting
+	– Deadlocks:
+	Possible under lock-based (requires detection and resolution); impossible under timestamp-based
+	– Overhead:
+	Lock-based requires lock-table management and deadlock detection; timestamp-based requires maintaining timestamps and handling aborts
+	– Throughput:
+	Lock-based tends to perform better when contention is moderate to high (fewer aborts); timestamp-based can perform better in low-contention scenarios (no waits)
+	– Complexity:
+	Lock-based is conceptually simpler to understand; timestamp-based demands careful implementation of timestamp protocols
+	– Fairness:
+	Lock-based fairness depends on lock scheduling; timestamp-based often favors older transactions (through wound-wait or wait-die schemes)
+
+====================================================================================
+
+Sample Student Answer:
+Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren’t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.
+
+Timestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it’s too old (i.e. less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.
+
+====================================================================================
+
+Marking Scheme:
+1
+Give a clear, concise definition of either lock-based or timestamp-based concurrency control.
+
+2
+State two distinct differences between lock-based and timestamp-based approaches (1 mark each), for example:
+	1.	Lock-based may block and deadlock, requiring detection; timestamp-based never blocks but aborts conflicting transactions.
+	2.	Lock-based enforces serializability via locks (2PL), timestamp-based uses timestamp ordering rules and maintains read/write timestamps.

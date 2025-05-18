@@ -1,0 +1,78 @@
+Question:
+What are the advantages of database system over file system?
+
+====================================================================================
+
+Marks:
+5
+
+====================================================================================
+
+Relevant Theory:
+Comparing a database-management system (DBMS) to a traditional file-based system:
+	1.	Data Independence
+	•	Logical Data Independence lets you change the conceptual schema (e.g. add a new column) without rewriting application programs.
+	•	Physical Data Independence lets you change storage structures or indexing strategies without touching application code.
+	•	In a file system, application programs are tightly coupled to file formats and record layouts, so any change “ripples” into code.
+
+	2.	Reduced Data Redundancy & Inconsistency
+	•	A DBMS centralizes data storage in one place, so the same piece of information isn’t stored in multiple files.
+	•	Eliminates the risk of conflicting copies (e.g.\ two “customer” records out of sync).
+	•	Enforced by entity integrity and referential integrity constraints so you cannot accidentally insert or orphan inconsistent data.
+
+	3.	Data Abstraction & Multiple Views
+	•	DBMSs offer a three-level architecture (external, conceptual, internal), allowing different user “views” of the data.
+	•	File systems expose only the raw file layout, so every user or program must understand and navigate the full structure.
+
+	4.	Improved Data Sharing
+	•	A DBMS enables controlled, concurrent access by multiple users/applications through a central engine.
+	•	File systems require building your own file-locking or coordination logic, which is error-prone and non-standardized.
+	
+	5.	Transaction Management (ACID Properties)
+	•	Atomicity: a transaction’s changes either all occur or none do.
+	•	Consistency: transactions move the database from one valid state to another, respecting all constraints.
+	•	Isolation: concurrent transactions don’t interfere; each behaves as if it were alone.
+	•	Durability: once committed, changes survive crashes.
+	•	In file systems you’d have to code all of this yourself (if it’s even possible).
+	
+	6.	Query Optimization & Efficient Data Access
+	•	DBMS query processors analyze declarative queries (e.g.\ SQL) and automatically choose efficient access paths (indexes, join orders).
+	•	File systems give you just low-level read/write calls; any optimization is left to the programmer.
+	
+	7.	Robust Security & Authorization
+	•	Fine-grained access controls (e.g.\ GRANT/REVOKE in SQL) let you restrict operations by user, table, column, or even row.
+	•	File systems typically only offer coarse OS-level permissions on entire files or directories.
+	
+	8.	Centralized Backup & Recovery
+	•	DBMSs provide built-in mechanisms for periodic backups, online backups, and crash recovery via logs and checkpoints.
+	•	With files you end up writing your own backup scripts and doing manual restores, with no guarantee of transactional consistency.
+
+Together, these theoretical foundations explain why modern applications almost always sit on a DBMS rather than a raw file-based approach.
+
+====================================================================================
+
+Sample Student Answer:
+Advantages of a DBMS over a File System
+	1.	Data Independence
+		The three‐level ANSI/SPARC architecture (external, conceptual, internal) means you can change the logical schema or storage layout without rewriting application programs.
+
+	2.	Reduced Redundancy & Consistency
+		A central data dictionary and enforced constraints (primary/foreign keys, UNIQUE, CHECK) prevent duplicate or conflicting copies of the same data.
+
+	3.	Transactions & ACID Properties
+		Built-in support for atomic, consistent, isolated, and durable transactions ensures that updates either fully succeed or roll back on failure—something the file approach must reimplement manually.
+		
+	4.	Concurrency Control & Security
+		Standard locking (2PL) or MVCC protocols let many users access and modify data safely, while GRANT/REVOKE lets you restrict operations down to tables or even columns.
+
+====================================================================================
+
+Marking Scheme:
+1
+One‐sentence DBMS vs file system definition.
+
+2
+Explain data independence (logical & physical) and reduced redundancy/inconsistency through a central catalog and integrity constraints.
+
+2
+Cover ACID transaction support (atomicity, consistency, isolation, durability) and standardized concurrency control (2PL/MVCC) with fine-grained GRANT/REVOKE security.

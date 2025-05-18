@@ -1,0 +1,122 @@
+Question:
+Explain various mapping rules to convert ERR into relational schema with example.
+
+====================================================================================
+
+Marks:
+5
+
+====================================================================================
+
+Relevant Theory:
+Converting an Entity–Relationship (ER) or Enhanced ER (EER) model into a set of relational tables:
+
+1. Mapping Regular (Strong) Entity Types
+	•	Rule: For each entity type E
+	•	Create a relation (table) named E.
+	•	Each simple attribute of E becomes a column.
+	•	Choose the key attribute(s) of E as the primary key.
+	•	Notes:
+	•	Composite attributes are broken into their component simple attributes.
+	•	Multi-valued attributes are deferred to a separate relation (see below).
+
+2. Mapping Composite & Multi-valued Attributes
+	•	Composite Attributes: Split into separate columns for each simple sub-attribute.
+	•	Multi-valued Attributes:
+	•	Create a new relation R.
+	•	R’s primary key is the combination of:
+	•	The owner entity’s primary key.
+	•	The multi-valued attribute itself.
+	•	Both become a composite primary key in R.
+
+3. Mapping Weak Entity Types
+	•	Rule: For each weak entity type W with owner entity O:
+	•	Create a relation W.
+	•	Columns: all simple attributes of W plus the primary key columns of O.
+	•	Primary key of W is the combination of W’s partial key and O’s key.
+	•	Enforce a foreign-key constraint on the O-key columns referencing O.
+
+4. Mapping Binary Relationship Types
+
+Let R be a relationship between entities A and B with cardinalities:
+	1.	One‐to‐One (1:1):
+	•	Option A: Merge into one relation (if semantically reasonable).
+	•	Option B: Pick one side (say A), add B’s primary key as a foreign key in A.
+	2.	One‐to‐Many (1:N):
+	•	Place a foreign key in the “many” side’s relation referencing the “one” side’s primary key.
+	3.	Many‐to‐Many (M:N):
+	•	Create a new relation R.
+	•	R’s primary key is the combination of A’s and B’s primary keys.
+	•	Include any descriptive attributes of the relationship as additional columns in R.
+	•	Enforce foreign keys from R to A and B.
+
+5. Mapping Ternary and Higher-degree Relationships
+	•	Rule: For each n-ary relationship R among entity types E₁,…,Eₙ:
+	•	Create a relation R.
+	•	Columns: primary keys of each participating entity Eᵢ, plus any relationship attributes.
+	•	Primary key: the combination of all participating keys.
+	•	Foreign keys: each key column references its entity’s relation.
+
+6. Mapping ISA (Specialization) Hierarchies
+
+Three common strategies:
+	1.	Single Table Inheritance (One Relation):
+	•	One table for the entire superclass+subclasses.
+	•	Columns for every attribute; include a discriminator column.
+	2.	Class Table Inheritance (One per Class):
+	•	One relation for the superclass (with its attributes).
+	•	One relation for each subclass (with subclass-specific attributes plus the superclass key as primary key & foreign key).
+	3.	Concrete Table Inheritance (One per Leaf Class):
+	•	No table for the superclass.
+	•	One table for each subclass, including all inherited attributes and its own attributes.
+
+
+These mapping rules guarantee a lossless, dependency-preserving translation from an ER/EER diagram into a normalized relational schema.
+
+====================================================================================
+
+Sample Student Answer:
+To map an ER diagram into tables:
+	1.	Strong Entities:
+	•	For each regular entity, create a relation with one column per simple attribute and designate its key as the primary key.
+	•	Example:
+	•	Entity Student( StudentID, Name, DOB ) → table
+
+Student(
+  StudentID PK,
+  Name,
+  DOB
+)
+
+	2.	One-to-Many Relationships (1:N):
+	•	Place the primary key of the “one” side as a foreign key in the “many” side’s table.
+	•	Example: A 1:N “Student → Marks” relationship becomes
+
+Marks(
+  MarkID PK,
+  StudentID FK → Student.StudentID,
+  Subject,
+  Score
+)
+
+	3.	Many-to-Many Relationships (M:N):
+	•	Create a separate relation whose primary key is the combination of both sides’ keys, and include any relationship attributes.
+	•	Example: For Student M:N Course, define
+
+Enroll(
+  StudentID FK → Student.StudentID,
+  CourseID FK → Course.CourseID,
+  Grade,
+  PRIMARY KEY(StudentID, CourseID)
+)
+
+These three rules cover most of the basic conversions needed; a fuller answer would also address weak entities, multi-valued/composite attributes, and ISA hierarchies.
+
+====================================================================================
+
+Marking Scheme:
+2
+Strong Entity & One-to-Many Relationship Mapping: state each rule and give a brief example
+
+3
+Many-to-Many Relationship, Multi-valued Attribute & Weak Entity Mapping: state each rule and give a brief example

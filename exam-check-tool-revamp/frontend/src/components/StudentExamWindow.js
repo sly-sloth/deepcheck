@@ -393,7 +393,7 @@ const StudentExamWindow = () => {
                 <Form.Label>Your Answer</Form.Label>
                 <Form.Control
                   as="textarea"
-                  rows={5}
+                  rows={12}
                   style={{ minHeight: 120, maxHeight: 200, overflowY: 'auto', resize: 'vertical' }}
                   value={answers[displayQ] || ''}
                   onChange={e => handleAnswerChange(displayQ, e.target.value)}

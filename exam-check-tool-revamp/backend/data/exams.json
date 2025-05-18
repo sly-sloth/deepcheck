@@ -167,5 +167,146 @@
       }
     ],
     "teacher": "teacher"
+  },
+  {
+    "id": "b3d7484e-af7c-491e-8420-b1bbd5108d26",
+    "title": "DBMS Mid Sem Exam",
+    "duration": "90",
+    "description": "Mid-term exam for Database Management Systems (CMCSC07).",
+    "instructions": "1. Attempt all questions.\n2. Any attempt to cheat/copy would result in malpractice.\n3. You are not allowed to leave the exam hall before the allotted time expires.\n4. Submit you exam when you are finished.\n5. In case time runs out, your answers would be automatically submitted.\n6. You can flag questions to be revisited.\n\nGood Luck!",
+    "questions": [
+      {
+        "type": "Subjective",
+        "text": "Explain with example, specialization and generalization.",
+        "options": [],
+        "related_theory": "Specialization and Generalization in EER Modeling\n\nBoth specialization and generalization capture \u201cis-a\u201d hierarchies among entity types, but they work in opposite directions:\n\n\n1. Specialization (Top-Down)\n\t\u2022\tDefinition: Starting from a broad superclass, define more specific subclasses by partitioning its entities according to distinguishing properties.\n\t\u2022\tNotation: A triangle labeled \u201cis-a\u201d points from the superclass down to its subclasses, optionally annotated with constraints.\n\t\u2022\tConstraints:\n\t\u2022\tDisjointness:\n\t\u2022\tDisjoint (d): an instance of the superclass can belong to at most one subclass.\n\t\u2022\tOverlapping (o): an instance may belong to multiple subclasses.\n\t\u2022\tCompleteness:\n\t\u2022\tTotal (t): every superclass instance must be in at least one subclass.\n\t\u2022\tPartial (p): some superclass instances need not appear in any subclass.\n\t\u2022\tExample:\n\nSuperclass: Vehicle(VehicleID, Manufacturer, ModelYear)  \nSubclasses:  \n  \u2013 Car(NumDoors, IsElectric)  \n  \u2013 Truck(PayloadCapacity)  \nConstraints: disjoint, total  \n\nHere every Vehicle is either a Car or a Truck (total), and never both (disjoint).\n\n\n2. Generalization (Bottom-Up)\n\t\u2022\tDefinition: Starting from multiple related entity types, extract their common attributes into a single superclass, reducing redundancy.\n\t\u2022\tProcess: Identify shared properties, promote them to a new generic entity, and make the originals its subclasses.\n\t\u2022\tExample:\n\nOriginal Entity Types:  \n  \u2013 Employee(EmployeeID, Name, HireDate, Salary)  \n  \u2013 Customer(CustomerID, Name, SignupDate, Email)  \n\nGeneralize into:  \n  Superclass: Person(PersonID, Name)  \n  Subclasses:  \n    \u2013 Employee(PersonID PK \u2192 EmployeeID, HireDate, Salary)  \n    \u2013 Customer(PersonID PK \u2192 CustomerID, SignupDate, Email)  \n\n\n3. Key Points\n\t\u2022\tInheritance: Subclasses inherit all attributes and relationships of their superclass.\n\t\u2022\tDesign Choice:\n\t\u2022\tUse specialization when you start with a general concept and need to model specific variants.\n\t\u2022\tUse generalization when you see multiple entities sharing common features that can be abstracted.\n\t\u2022\tBenefits:\n\t\u2022\tImproves clarity and avoids redundant attribute definitions.\n\t\u2022\tSupports polymorphism in database applications (queries on the superclass return subclass instances).\n",
+        "marks": "2",
+        "marking_scheme": [
+          [
+            "Define specialization and give a brief example.",
+            1
+          ],
+          [
+            "Define generalization and give a brief example.",
+            1
+          ]
+        ]
+      },
+      {
+        "marking_scheme": [
+          [
+            "Define two-level architecture and its data\u2010independence support.",
+            1
+          ],
+          [
+            "Define three-level architecture and its additional abstraction and data\u2010independence benefits.",
+            1
+          ]
+        ],
+        "marks": "2",
+        "options": [],
+        "related_theory": "Two\u2010Level (Two\u2010Schema) Architecture\n\t\u2022\tConsists of only External and Internal schemas.\n\t\u2022\tExternal schema (user view): how each application or user sees the data.\n\t\u2022\tInternal schema (physical schema): how data is actually stored on disk (file structures, indexes).\n\t\u2022\tNo Conceptual level: there\u2019s a direct mapping between user views and physical storage.\n\t\u2022\tData Independence:\n\t\u2022\tPhysical data independence is supported (you can change storage structures without affecting user views).\n\t\u2022\tLogical data independence is not supported (any change to the logical structure requires updates to all user applications).\n\n\nThree\u2010Level (Three\u2010Schema) Architecture\n\t\u2022\tANSI/SPARC standard separation into three layers:\n\t1.\tExternal Level (one or more user views)\n\t2.\tConceptual Level (global logical schema of the entire database)\n\t3.\tInternal Level (physical storage schema)\n\t\u2022\tMappings:\n\t\u2022\tExternal\u2013Conceptual mapping translates each view into the global schema.\n\t\u2022\tConceptual\u2013Internal mapping translates the global schema into physical storage.\n\t\u2022\tData Independence:\n\t\u2022\tPhysical data independence: changes to internal schema do not affect conceptual or external schemas.\n\t\u2022\tLogical data independence: changes to conceptual schema do not affect external schemas (user views).\n\t\u2022\tAdvantages:\n\t\u2022\tInsulates applications from both storage details and evolving business requirements.\n\t\u2022\tSupports multiple tailored views without altering the underlying storage or global schema.",
+        "text": "What do you mean by two-levels and three-levels architecture?",
+        "type": "Subjective"
+      },
+      {
+        "marking_scheme": [
+          [
+            "Define super key and candidate key and give a brief example of each.",
+            1
+          ],
+          [
+            "Define primary key and give a brief example.",
+            1
+          ],
+          [
+            "Define foreign key and give a brief example.",
+            1
+          ]
+        ],
+        "marks": "3",
+        "options": [],
+        "related_theory": "There are 4 types of keys in a database management system. They are -\n\n1. Super Key\n\t\u2022\tA super key is any set of one or more attributes that, taken together, can uniquely identify every tuple in a relation.\n\t\u2022\tIt need not be minimal\u2014extra attributes may be present.\n\t\u2022\tProperty: If R has attributes \\{A,B,C,\\dots\\}, then any superset of a candidate key (e.g.\\ \\{A,B\\} when \\{A\\} is enough) is still a super key.\n\n\n2. Candidate Key\n\t\u2022\tA candidate key is a minimal super key: it uniquely identifies tuples, and no proper subset of it does.\n\t\u2022\tMinimality is the key distinction from a super key.\n\t\u2022\tA relation may have multiple candidate keys (e.g.\\ both SocialSecurityNumber and Email might each uniquely identify a Person).\n\n\n3. Primary Key\n\t\u2022\tThe primary key is the one candidate key chosen by the database designer (or DBA) to serve as the main identifier for tuples.\n\t\u2022\tConstraints:\n\t\u2022\tUniqueness: No two tuples share the same primary\u2010key value.\n\t\u2022\tNon\u2010null: Every tuple must have a non\u2010null value for the primary key.\n\t\u2022\tAll other candidate keys remain alternate keys.\n\n\n4. Foreign Key\n\t\u2022\tA foreign key is one or more attributes in a relation R that reference the primary key of another relation S, establishing a link between tuples in R and tuples in S.\n\t\u2022\tReferential Integrity Rule:\n\t\u2022\tEach non\u2010null foreign\u2010key value must match an existing primary\u2010key value in the referenced relation.\n\t\u2022\tOptionally, foreign\u2010key columns may be defined ON DELETE/UPDATE CASCADE or with SET NULL to control how changes propagate.\n\n\nHow They Relate\n\t1.\tEvery primary key is a candidate key, and every candidate key is a super key, but not vice versa.\n\t2.\tForeign keys are not keys for their own relation; instead, they point to another relation\u2019s primary key to enforce consistency across tables.\n\n\nThese definitions underpin entity integrity (via primary keys) and referential integrity (via foreign keys) in relational databases.",
+        "text": "Define primary key, foreign key, candidate key and super key with suitable examples.\n",
+        "type": "Subjective"
+      },
+      {
+        "marking_scheme": [
+          [
+            "Give a clear, concise definition of either lock-based or timestamp-based concurrency control.",
+            1
+          ],
+          [
+            "State two distinct differences between lock-based and timestamp-based approaches (1 mark each), for example: \t1.\tLock-based may block and deadlock, requiring detection; timestamp-based never blocks but aborts conflicting transactions. \t2.\tLock-based enforces serializability via locks (2PL), timestamp-based uses timestamp ordering rules and maintains read/write timestamps.",
+            2
+          ]
+        ],
+        "marks": "3",
+        "options": [],
+        "related_theory": "Concurrency control in a DBMS ensures that concurrent transactions produce a result equivalent to some serial execution, while allowing as much parallelism as possible.\n\n1.\tLock-Based Concurrency Control (Pessimistic)\n\t\u2013 Locks and Lock Modes\n\t\t\u2022 Shared (S) locks for reads (multiple transactions can hold them simultaneously)\n\t\t\u2022 Exclusive (X) locks for writes (only one transaction at a time)\n\t\u2013 Two-Phase Locking (2PL)\n\t\t\u2022 Growing phase: transaction acquires locks but does not release any\n\t\t\u2022 Shrinking phase: transaction releases locks but does not acquire any new ones\n\t\t\u2022 Strict 2PL holds all exclusive locks until commit, simplifying recovery\n\t\u2013 Deadlock Handling\n\t\t\u2022 Use a wait-for graph to detect cycles\n\t\t\u2022 Resolve by aborting one of the transactions in the deadlock\n\t\t\u2022 Alternatively use prevention schemes (wait-die or wound-wait) or timeouts\n\t\u2013 Pros and Cons\n\t\t\u2022 Pros: Enforces strict serializability; recovery is easier under strict 2PL\n\t\t\u2022 Cons: Transactions may block and wait indefinitely; deadlock detection adds overhead; throughput can suffer under high contention\n\n2.\tTimestamp-Based Concurrency Control (Optimistic)\n\t\u2013 Timestamps\n\t\t\u2022 Each transaction T_i is assigned a unique timestamp TS(T_i) when it starts\n\t\t\u2022 Each data item X keeps track of Read_TS(X) (highest timestamp of any reader) and Write_TS(X) (highest timestamp of any writer)\n\t\u2013 Timestamp Ordering Protocol\n\t\t\u2022 Read Rule: if TS(T_i) < Write_TS(X), abort T_i; otherwise allow the read and update Read_TS(X)\n\t\t\u2022 Write Rule: if TS(T_i) < Read_TS(X), abort T_i; if TS(T_i) < Write_TS(X), ignore the write (Thomas\u2019s rule); otherwise allow the write and update Write_TS(X)\n\t\u2013 No Waiting or Deadlocks\n\t\t\u2022 Transactions never block; they either proceed or are aborted immediately\n\t\u2013 Pros and Cons\n\t\t\u2022 Pros: No deadlocks; no waiting, so works well in low-contention environments\n\t\t\u2022 Cons: High abort rate under contention, wasting work; more complex timestamp management\n\n3.\tKey Differences Between the Two Approaches\n\t\u2013 Conflict resolution:\n\tLock-based uses blocking and waits; timestamp-based uses immediate aborts with no waiting\n\t\u2013 Deadlocks:\n\tPossible under lock-based (requires detection and resolution); impossible under timestamp-based\n\t\u2013 Overhead:\n\tLock-based requires lock-table management and deadlock detection; timestamp-based requires maintaining timestamps and handling aborts\n\t\u2013 Throughput:\n\tLock-based tends to perform better when contention is moderate to high (fewer aborts); timestamp-based can perform better in low-contention scenarios (no waits)\n\t\u2013 Complexity:\n\tLock-based is conceptually simpler to understand; timestamp-based demands careful implementation of timestamp protocols\n\t\u2013 Fairness:\n\tLock-based fairness depends on lock scheduling; timestamp-based often favors older transactions (through wound-wait or wait-die schemes)",
+        "text": "Differentiate between lock-based concurrency control and timestamp-based concurrency control.",
+        "type": "Subjective"
+      },
+      {
+        "marking_scheme": [
+          [
+            "Define normalization and state the goal of applying normal forms.",
+            1
+          ],
+          [
+            "1NF & 2NF: for each, state the requirement and give a brief example.",
+            2
+          ],
+          [
+            "3NF & BCNF: for each, state the requirement and give a brief example.",
+            2
+          ]
+        ],
+        "marks": "5",
+        "options": [],
+        "related_theory": "Relational normal forms and how they eliminate redundancy and update anomalies, with a brief schema example for each:\n\nFirst Normal Form (1NF)\n\t\u2022\tRequirement: All attributes must have atomic (indivisible) values; each column contains only scalar values, and each row/column intersection holds exactly one value.\n\t\u2022\tWhy: Prevents repeating groups and ensures a flat table structure.\n\t\u2022\tExample:\n\nStudentCourses(StudentID, Name, Courses)  \n\nviolates 1NF if Courses = {\u201cMath, Physics\u201d}. To bring into 1NF:\n\nStudentCourse(StudentID, Name, Course)  \n\nso each row has a single Course.\n\n\nSecond Normal Form (2NF)\n\t\u2022\tPrerequisite: Relation is in 1NF.\n\t\u2022\tRequirement: No partial dependencies of non-key attributes on part of a composite primary key. Every non-key attribute must depend on the whole key.\n\t\u2022\tWhy: Eliminates redundancy when a relation\u2019s key is composite.\n\t\u2022\tExample:\n\nEnrollment(StudentID, CourseID, StudentName, Grade)  \n\nPrimary key = (StudentID, CourseID). StudentName depends only on StudentID (partial dependency). To achieve 2NF:\n\nStudent(StudentID PK, StudentName)  \nEnrollment(StudentID FK, CourseID FK, Grade,  PK(StudentID,CourseID))  \n\n\nThird Normal Form (3NF)\n\t\u2022\tPrerequisite: Relation is in 2NF.\n\t\u2022\tRequirement: No transitive dependencies\u2014no non-key attribute depends on another non-key attribute.\n\t\u2022\tWhy: Ensures that every non-key attribute depends only on the key, not on other non-key attributes.\n\t\u2022\tExample:\n\nEmployee(EmpID, DeptID, DeptName, Salary)  \n\nHere DeptName depends on DeptID (non-key) \u2192 transitive dependency. To achieve 3NF:\n\nDepartment(DeptID PK, DeptName)  \nEmployee(EmpID PK, DeptID FK, Salary)  \n\n\nBoyce\u2013Codd Normal Form (BCNF)\n\t\u2022\tPrerequisite: Relation is in 3NF.\n\t\u2022\tRequirement: For every non-trivial functional dependency X \u2192 Y, X must be a superkey.\n\t\u2022\tWhy: Handles edge-cases 3NF doesn\u2019t cover, where a candidate key is composite and another non-key attribute functionally determines part of it.\n\t\u2022\tExample:\n\nCourseInstructor(Course, Instructor, Room)  \n\nwith FDs: (Course, Instructor) \u2192 Room and Room \u2192 Instructor. Here Room \u2192 Instructor violates BCNF because Room isn\u2019t a key. Decompose to:\n\nRoomAssignment(Room PK, Instructor)  \nCourseRoom(Course PK, Room FK)  \n\n\nHigher Normal Forms (briefly)\n\t\u2022\tFourth Normal Form (4NF): No non-trivial multi-valued dependencies; each independent multi-valued fact goes in its own table.\n\t\u2022\tFifth Normal Form (5NF): No join dependencies that aren\u2019t implied by candidate keys; prevents certain kinds of reconstruction anomalies.\n\n\nTogether, these progressive constraints\u20141NF through BCNF (and beyond)\u2014systematically reduce redundancy and ensure that each fact in the database is stored in exactly one place.",
+        "text": "Explain normal forms in DBMS with examples for each.\n",
+        "type": "Subjective"
+      },
+      {
+        "marking_scheme": [
+          [
+            "Strong Entity & One-to-Many Relationship Mapping: state each rule and give a brief example",
+            2
+          ],
+          [
+            "Many-to-Many Relationship, Multi-valued Attribute & Weak Entity Mapping: state each rule and give a brief example",
+            3
+          ]
+        ],
+        "marks": "5",
+        "options": [],
+        "related_theory": "Converting an Entity\u2013Relationship (ER) or Enhanced ER (EER) model into a set of relational tables:\n\n1. Mapping Regular (Strong) Entity Types\n\t\u2022\tRule: For each entity type E\n\t\u2022\tCreate a relation (table) named E.\n\t\u2022\tEach simple attribute of E becomes a column.\n\t\u2022\tChoose the key attribute(s) of E as the primary key.\n\t\u2022\tNotes:\n\t\u2022\tComposite attributes are broken into their component simple attributes.\n\t\u2022\tMulti-valued attributes are deferred to a separate relation (see below).\n\n2. Mapping Composite & Multi-valued Attributes\n\t\u2022\tComposite Attributes: Split into separate columns for each simple sub-attribute.\n\t\u2022\tMulti-valued Attributes:\n\t\u2022\tCreate a new relation R.\n\t\u2022\tR\u2019s primary key is the combination of:\n\t\u2022\tThe owner entity\u2019s primary key.\n\t\u2022\tThe multi-valued attribute itself.\n\t\u2022\tBoth become a composite primary key in R.\n\n3. Mapping Weak Entity Types\n\t\u2022\tRule: For each weak entity type W with owner entity O:\n\t\u2022\tCreate a relation W.\n\t\u2022\tColumns: all simple attributes of W plus the primary key columns of O.\n\t\u2022\tPrimary key of W is the combination of W\u2019s partial key and O\u2019s key.\n\t\u2022\tEnforce a foreign-key constraint on the O-key columns referencing O.\n\n4. Mapping Binary Relationship Types\n\nLet R be a relationship between entities A and B with cardinalities:\n\t1.\tOne\u2010to\u2010One (1:1):\n\t\u2022\tOption A: Merge into one relation (if semantically reasonable).\n\t\u2022\tOption B: Pick one side (say A), add B\u2019s primary key as a foreign key in A.\n\t2.\tOne\u2010to\u2010Many (1:N):\n\t\u2022\tPlace a foreign key in the \u201cmany\u201d side\u2019s relation referencing the \u201cone\u201d side\u2019s primary key.\n\t3.\tMany\u2010to\u2010Many (M:N):\n\t\u2022\tCreate a new relation R.\n\t\u2022\tR\u2019s primary key is the combination of A\u2019s and B\u2019s primary keys.\n\t\u2022\tInclude any descriptive attributes of the relationship as additional columns in R.\n\t\u2022\tEnforce foreign keys from R to A and B.\n\n5. Mapping Ternary and Higher-degree Relationships\n\t\u2022\tRule: For each n-ary relationship R among entity types E\u2081,\u2026,E\u2099:\n\t\u2022\tCreate a relation R.\n\t\u2022\tColumns: primary keys of each participating entity E\u1d62, plus any relationship attributes.\n\t\u2022\tPrimary key: the combination of all participating keys.\n\t\u2022\tForeign keys: each key column references its entity\u2019s relation.\n\n6. Mapping ISA (Specialization) Hierarchies\n\nThree common strategies:\n\t1.\tSingle Table Inheritance (One Relation):\n\t\u2022\tOne table for the entire superclass+subclasses.\n\t\u2022\tColumns for every attribute; include a discriminator column.\n\t2.\tClass Table Inheritance (One per Class):\n\t\u2022\tOne relation for the superclass (with its attributes).\n\t\u2022\tOne relation for each subclass (with subclass-specific attributes plus the superclass key as primary key & foreign key).\n\t3.\tConcrete Table Inheritance (One per Leaf Class):\n\t\u2022\tNo table for the superclass.\n\t\u2022\tOne table for each subclass, including all inherited attributes and its own attributes.\n\n\nThese mapping rules guarantee a lossless, dependency-preserving translation from an ER/EER diagram into a normalized relational schema.",
+        "text": "Explain various mapping rules to convert ERR into relational schema with example.",
+        "type": "Subjective"
+      },
+      {
+        "marking_scheme": [
+          [
+            "One\u2010sentence DBMS vs file system definition.",
+            1
+          ],
+          [
+            "Explain data independence (logical & physical) and reduced redundancy/inconsistency through a central catalog and integrity constraints.",
+            2
+          ],
+          [
+            "Cover ACID transaction support (atomicity, consistency, isolation, durability) and standardized concurrency control (2PL/MVCC) with fine-grained GRANT/REVOKE security.",
+            2
+          ]
+        ],
+        "marks": "5",
+        "options": [],
+        "related_theory": "Comparing a database-management system (DBMS) to a traditional file-based system:\n\t1.\tData Independence\n\t\u2022\tLogical Data Independence lets you change the conceptual schema (e.g. add a new column) without rewriting application programs.\n\t\u2022\tPhysical Data Independence lets you change storage structures or indexing strategies without touching application code.\n\t\u2022\tIn a file system, application programs are tightly coupled to file formats and record layouts, so any change \u201cripples\u201d into code.\n\n\t2.\tReduced Data Redundancy & Inconsistency\n\t\u2022\tA DBMS centralizes data storage in one place, so the same piece of information isn\u2019t stored in multiple files.\n\t\u2022\tEliminates the risk of conflicting copies (e.g.\\ two \u201ccustomer\u201d records out of sync).\n\t\u2022\tEnforced by entity integrity and referential integrity constraints so you cannot accidentally insert or orphan inconsistent data.\n\n\t3.\tData Abstraction & Multiple Views\n\t\u2022\tDBMSs offer a three-level architecture (external, conceptual, internal), allowing different user \u201cviews\u201d of the data.\n\t\u2022\tFile systems expose only the raw file layout, so every user or program must understand and navigate the full structure.\n\n\t4.\tImproved Data Sharing\n\t\u2022\tA DBMS enables controlled, concurrent access by multiple users/applications through a central engine.\n\t\u2022\tFile systems require building your own file-locking or coordination logic, which is error-prone and non-standardized.\n\t\n\t5.\tTransaction Management (ACID Properties)\n\t\u2022\tAtomicity: a transaction\u2019s changes either all occur or none do.\n\t\u2022\tConsistency: transactions move the database from one valid state to another, respecting all constraints.\n\t\u2022\tIsolation: concurrent transactions don\u2019t interfere; each behaves as if it were alone.\n\t\u2022\tDurability: once committed, changes survive crashes.\n\t\u2022\tIn file systems you\u2019d have to code all of this yourself (if it\u2019s even possible).\n\t\n\t6.\tQuery Optimization & Efficient Data Access\n\t\u2022\tDBMS query processors analyze declarative queries (e.g.\\ SQL) and automatically choose efficient access paths (indexes, join orders).\n\t\u2022\tFile systems give you just low-level read/write calls; any optimization is left to the programmer.\n\t\n\t7.\tRobust Security & Authorization\n\t\u2022\tFine-grained access controls (e.g.\\ GRANT/REVOKE in SQL) let you restrict operations by user, table, column, or even row.\n\t\u2022\tFile systems typically only offer coarse OS-level permissions on entire files or directories.\n\t\n\t8.\tCentralized Backup & Recovery\n\t\u2022\tDBMSs provide built-in mechanisms for periodic backups, online backups, and crash recovery via logs and checkpoints.\n\t\u2022\tWith files you end up writing your own backup scripts and doing manual restores, with no guarantee of transactional consistency.\n\nTogether, these theoretical foundations explain why modern applications almost always sit on a DBMS rather than a raw file-based approach.",
+        "text": "What are the advantages of database system over file system?",
+        "type": "Subjective"
+      }
+    ],
+    "teacher": "teacher"
   }
 ]

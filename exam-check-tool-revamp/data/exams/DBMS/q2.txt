@@ -1,0 +1,51 @@
+Question:
+What do you mean by two-levels and three-levels architecture?
+
+====================================================================================
+
+Marks:
+2
+
+====================================================================================
+
+Relevant Theory:
+Two‐Level (Two‐Schema) Architecture
+	•	Consists of only External and Internal schemas.
+	•	External schema (user view): how each application or user sees the data.
+	•	Internal schema (physical schema): how data is actually stored on disk (file structures, indexes).
+	•	No Conceptual level: there’s a direct mapping between user views and physical storage.
+	•	Data Independence:
+	•	Physical data independence is supported (you can change storage structures without affecting user views).
+	•	Logical data independence is not supported (any change to the logical structure requires updates to all user applications).
+
+
+Three‐Level (Three‐Schema) Architecture
+	•	ANSI/SPARC standard separation into three layers:
+	1.	External Level (one or more user views)
+	2.	Conceptual Level (global logical schema of the entire database)
+	3.	Internal Level (physical storage schema)
+	•	Mappings:
+	•	External–Conceptual mapping translates each view into the global schema.
+	•	Conceptual–Internal mapping translates the global schema into physical storage.
+	•	Data Independence:
+	•	Physical data independence: changes to internal schema do not affect conceptual or external schemas.
+	•	Logical data independence: changes to conceptual schema do not affect external schemas (user views).
+	•	Advantages:
+	•	Insulates applications from both storage details and evolving business requirements.
+	•	Supports multiple tailored views without altering the underlying storage or global schema.
+
+====================================================================================
+
+Sample Student Answer:
+Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.
+
+Three-level architecture adds a conceptual schema between external and internal levels, with external–conceptual and conceptual–internal mappings, giving both logical and physical data independence.
+
+====================================================================================
+
+Marking Scheme:
+1
+Define two-level architecture and its data‐independence support.
+
+1
+Define three-level architecture and its additional abstraction and data‐independence benefits.

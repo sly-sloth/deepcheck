@@ -1,0 +1,107 @@
+Specialization is a top-down modeling technique in EER where a broad entity type is divided into more specific subtypes based on distinguishing attributes. For example, a Vehicle entity with attributes (VehicleID, Make, ModelYear) can be specialized into two subclasses:
+	- Car with additional attribute NumDoors
+	- Truck with additional attribute PayloadCapacity
+
+This means every Vehicle instance must be classified as either a Car or a Truck, inheriting the common attributes (VehicleID, Make, ModelYear) while also having its subtype’s specific properties.
+
+
+
+Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.
+
+Three-level architecture adds a conceptual schema between external and internal levels, with external–conceptual and conceptual–internal mappings, giving both logical and physical data independence.
+
+
+
+Super Key:
+A super key is any set of one or more attributes that can uniquely identify every tuple in a relation.
+Example: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.
+
+Candidate Key:
+A candidate key is a minimal super key—no proper subset of it can still uniquely identify tuples.
+Example: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn’t minimal).
+
+Primary Key:
+The primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.
+Example: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.
+
+Foreign Key:
+A foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.
+Example: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.
+
+
+
+Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren’t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.
+
+Timestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it’s too old (i.e. less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.
+
+
+
+First Normal Form (1NF):
+A relation is in 1NF if every attribute is atomic—no repeating groups or multi‐valued fields.
+Example:
+
+-- Violates 1NF
+StudentCourses(StudentID, Name, Courses)
+  (1, "Alice", {"Math","Physics"})
+
+Convert to 1NF by one row per course:
+
+StudentCourse(StudentID, Name, Course)
+  (1, "Alice", "Math")
+  (1, "Alice", "Physics")
+
+
+Second Normal Form (2NF):
+A relation in 1NF is in 2NF if no non‐key attribute is partially dependent on part of a composite key.
+Example:
+
+-- Violates 2NF (StudentName depends only on StudentID)
+Enrollment(StudentID, CourseID, StudentName, Grade)
+
+Decompose into:
+
+Student(StudentID PK, StudentName)
+Enrollment(StudentID FK, CourseID FK, Grade, PK(StudentID,CourseID))
+
+
+Third Normal Form (3NF):
+A 2NF relation is in 3NF if every non‐key attribute depends only on the key (no transitive dependencies).
+Example:
+
+-- Violates 3NF (DeptName depends on DeptID, not EmpID)
+Employee(EmpID PK, DeptID, DeptName, Salary)
+
+Decompose into:
+
+Department(DeptID PK, DeptName)
+Employee(EmpID PK, DeptID FK, Salary)
+
+
+Boyce–Codd Normal Form (BCNF):
+A 3NF relation is in BCNF if, for every non‐trivial functional dependency X→Y, X is a superkey.
+Example:
+
+-- Violates BCNF because Room→Instructor but Room is not a key
+CourseInstructor(Course, Instructor, Room)
+
+Decompose into:
+
+RoomAssignment(Room PK, Instructor)
+CourseRoom(Course PK, Room FK)
+
+Each step removes a specific kind of redundancy, ensuring that every fact is stored in exactly one place.
+
+
+
+Advantages of a DBMS over a File System
+	1.	Data Independence
+		The three‐level ANSI/SPARC architecture (external, conceptual, internal) means you can change the logical schema or storage layout without rewriting application programs.
+
+	2.	Reduced Redundancy & Consistency
+		A central data dictionary and enforced constraints (primary/foreign keys, UNIQUE, CHECK) prevent duplicate or conflicting copies of the same data.
+
+	3.	Transactions & ACID Properties
+		Built-in support for atomic, consistent, isolated, and durable transactions ensures that updates either fully succeed or roll back on failure—something the file approach must reimplement manually.
+		
+	4.	Concurrency Control & Security
+		Standard locking (2PL) or MVCC protocols let many users access and modify data safely, while GRANT/REVOKE lets you restrict operations down to tables or even columns.

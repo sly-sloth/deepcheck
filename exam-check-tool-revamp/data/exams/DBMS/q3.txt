@@ -1,0 +1,77 @@
+Question:
+Define primary key, foreign key, candidate key and super key with suitable examples.
+
+====================================================================================
+
+Marks:
+3
+
+====================================================================================
+
+Relevant Theory:
+There are 4 types of keys in a database management system. They are -
+
+1. Super Key
+	•	A super key is any set of one or more attributes that, taken together, can uniquely identify every tuple in a relation.
+	•	It need not be minimal—extra attributes may be present.
+	•	Property: If R has attributes \{A,B,C,\dots\}, then any superset of a candidate key (e.g.\ \{A,B\} when \{A\} is enough) is still a super key.
+
+
+2. Candidate Key
+	•	A candidate key is a minimal super key: it uniquely identifies tuples, and no proper subset of it does.
+	•	Minimality is the key distinction from a super key.
+	•	A relation may have multiple candidate keys (e.g.\ both SocialSecurityNumber and Email might each uniquely identify a Person).
+
+
+3. Primary Key
+	•	The primary key is the one candidate key chosen by the database designer (or DBA) to serve as the main identifier for tuples.
+	•	Constraints:
+	•	Uniqueness: No two tuples share the same primary‐key value.
+	•	Non‐null: Every tuple must have a non‐null value for the primary key.
+	•	All other candidate keys remain alternate keys.
+
+
+4. Foreign Key
+	•	A foreign key is one or more attributes in a relation R that reference the primary key of another relation S, establishing a link between tuples in R and tuples in S.
+	•	Referential Integrity Rule:
+	•	Each non‐null foreign‐key value must match an existing primary‐key value in the referenced relation.
+	•	Optionally, foreign‐key columns may be defined ON DELETE/UPDATE CASCADE or with SET NULL to control how changes propagate.
+
+
+How They Relate
+	1.	Every primary key is a candidate key, and every candidate key is a super key, but not vice versa.
+	2.	Foreign keys are not keys for their own relation; instead, they point to another relation’s primary key to enforce consistency across tables.
+
+
+These definitions underpin entity integrity (via primary keys) and referential integrity (via foreign keys) in relational databases.
+
+====================================================================================
+
+Sample Student Answer:
+Super Key:
+A super key is any set of one or more attributes that can uniquely identify every tuple in a relation.
+Example: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.
+
+Candidate Key:
+A candidate key is a minimal super key—no proper subset of it can still uniquely identify tuples.
+Example: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn’t minimal).
+
+Primary Key:
+The primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.
+Example: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.
+
+Foreign Key:
+A foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.
+Example: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.
+
+====================================================================================
+
+Marking Scheme:
+1
+Define super key and candidate key and give a brief example of each.
+
+1
+Define primary key and give a brief example.
+
+1
+Define foreign key and give a brief example.

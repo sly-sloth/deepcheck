@@ -2003,5 +2003,702 @@
       ],
       "total_score": 6.0
     }
+  },
+  {
+    "attempt_id": "dda49c9c-30a3-43c2-ab58-199a8137b741",
+    "exam_id": "b3d7484e-af7c-491e-8420-b1bbd5108d26",
+    "student_id": "vaibhav0",
+    "start_time": 1747570961,
+    "answers": {
+      "0": "Specialization is a top-down modeling technique in EER where a broad entity type is divided into more specific subtypes based on distinguishing attributes. For example, a Vehicle entity with attributes (VehicleID, Make, ModelYear) can be specialized into two subclasses:\n\t- Car with additional attribute NumDoors\n\t- Truck with additional attribute PayloadCapacity\n\nThis means every Vehicle instance must be classified as either a Car or a Truck, inheriting the common attributes (VehicleID, Make, ModelYear) while also having its subtype\u2019s specific properties.",
+      "1": "Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.\n\nThree-level architecture adds a conceptual schema between external and internal levels, with external\u2013conceptual and conceptual\u2013internal mappings, giving both logical and physical data independence.",
+      "2": "Super Key:\nA super key is any set of one or more attributes that can uniquely identify every tuple in a relation.\nExample: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.\n\nCandidate Key:\nA candidate key is a minimal super key\u2014no proper subset of it can still uniquely identify tuples.\nExample: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn\u2019t minimal).\n\nPrimary Key:\nThe primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.\nExample: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.\n\nForeign Key:\nA foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.\nExample: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.",
+      "3": "Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.\n\nTimestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it\u2019s too old (i.e. less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.",
+      "4": "First Normal Form (1NF):\nA relation is in 1NF if every attribute is atomic\u2014no repeating groups or multi\u2010valued fields.\nExample:\n\n-- Violates 1NF\nStudentCourses(StudentID, Name, Courses)\n  (1, \"Alice\", {\"Math\",\"Physics\"})\n\nConvert to 1NF by one row per course:\n\nStudentCourse(StudentID, Name, Course)\n  (1, \"Alice\", \"Math\")\n  (1, \"Alice\", \"Physics\")\n\n\nSecond Normal Form (2NF):\nA relation in 1NF is in 2NF if no non\u2010key attribute is partially dependent on part of a composite key.\nExample:\n\n-- Violates 2NF (StudentName depends only on StudentID)\nEnrollment(StudentID, CourseID, StudentName, Grade)\n\nDecompose into:\n\nStudent(StudentID PK, StudentName)\nEnrollment(StudentID FK, CourseID FK, Grade, PK(StudentID,CourseID))\n\n\nThird Normal Form (3NF):\nA 2NF relation is in 3NF if every non\u2010key attribute depends only on the key (no transitive dependencies).\nExample:\n\n-- Violates 3NF (DeptName depends on DeptID, not EmpID)\nEmployee(EmpID PK, DeptID, DeptName, Salary)\n\nDecompose into:\n\nDepartment(DeptID PK, DeptName)\nEmployee(EmpID PK, DeptID FK, Salary)\n\n\nBoyce\u2013Codd Normal Form (BCNF):\nA 3NF relation is in BCNF if, for every non\u2010trivial functional dependency X\u2192Y, X is a superkey.\nExample:\n\n-- Violates BCNF because Room\u2192Instructor but Room is not a key\nCourseInstructor(Course, Instructor, Room)\n\nDecompose into:\n\nRoomAssignment(Room PK, Instructor)\nCourseRoom(Course PK, Room FK)\n\nEach step removes a specific kind of redundancy, ensuring that every fact is stored in exactly one place.",
+      "5": "To map an ER diagram into tables:\n\t1.\tStrong Entities:\n\t\u2022\tFor each regular entity, create a relation with one column per simple attribute and designate its key as the primary key.\n\t\u2022\tExample:\n\t\u2022\tEntity Student( StudentID, Name, DOB ) \u2192 table\n\nStudent(\n  StudentID PK,\n  Name,\n  DOB\n)\n\n\t2.\tOne-to-Many Relationships (1:N):\n\t\u2022\tPlace the primary key of the \u201cone\u201d side as a foreign key in the \u201cmany\u201d side\u2019s table.\n\t\u2022\tExample: A 1:N \u201cStudent \u2192 Marks\u201d relationship becomes\n\nMarks(\n  MarkID PK,\n  StudentID FK \u2192 Student.StudentID,\n  Subject,\n  Score\n)\n\n\t3.\tMany-to-Many Relationships (M:N):\n\t\u2022\tCreate a separate relation whose primary key is the combination of both sides\u2019 keys, and include any relationship attributes.\n\t\u2022\tExample: For Student M:N Course, define\n\nEnroll(\n  StudentID FK \u2192 Student.StudentID,\n  CourseID FK \u2192 Course.CourseID,\n  Grade,\n  PRIMARY KEY(StudentID, CourseID)\n)\n\nThese three rules cover most of the basic conversions needed; a fuller answer would also address weak entities, multi-valued/composite attributes, and ISA hierarchies.",
+      "6": "Advantages of a DBMS over a File System\n\t1.\tData Independence\n\t\tThe three\u2010level ANSI/SPARC architecture (external, conceptual, internal) means you can change the logical schema or storage layout without rewriting application programs.\n\n\t2.\tReduced Redundancy & Consistency\n\t\tA central data dictionary and enforced constraints (primary/foreign keys, UNIQUE, CHECK) prevent duplicate or conflicting copies of the same data.\n\n\t3.\tTransactions & ACID Properties\n\t\tBuilt-in support for atomic, consistent, isolated, and durable transactions ensures that updates either fully succeed or roll back on failure\u2014something the file approach must reimplement manually.\n\t\t\n\t4.\tConcurrency Control & Security\n\t\tStandard locking (2PL) or MVCC protocols let many users access and modify data safely, while GRANT/REVOKE lets you restrict operations down to tables or even columns."
+    },
+    "submitted": true,
+    "end_time": 1747571130,
+    "evaluation_status": {
+      "overall": "done",
+      "questions": [
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        }
+      ]
+    },
+    "evaluation_result": {
+      "subject": "DBMS Mid Sem Exam",
+      "number-of-questions": 7,
+      "results": [
+        {
+          "question": "What are the advantages of database system over file system?\n",
+          "total_score_question": "2",
+          "total_score_gained": 1,
+          "student_answer": "Specialization is a top-down modeling technique in EER where a broad entity type is divided into more specific subtypes based on distinguishing attributes. For example, a Vehicle entity with attributes (VehicleID, Make, ModelYear) can be specialized into two subclasses:\n\t- Car with additional attribute NumDoors\n\t- Truck with additional attribute PayloadCapacity\n\nThis means every Vehicle instance must be classified as either a Car or a Truck, inheriting the common attributes (VehicleID, Make, ModelYear) while also having its subtype\u2019s specific properties.",
+          "student_answer_chunks": [
+            "<start-of-answer>Specialization is a top-down modeling technique in EER where a broad entity type is divided into more specific subtypes based on distinguishing attributes. For example, a Vehicle entity with attributes (VehicleID, Make, ModelYear) can be specialized into two subclasses: Car with additional attribute NumDoors and Truck with additional attribute PayloadCapacity. This means every Vehicle instance must be classified as either a Car or a Truck, inheriting the common attributes (VehicleID, Make, ModelYear) while also having its subtype\u2019s specific properties.<end-of-answer>",
+            ""
+          ],
+          "student_marks_chunkwise": [
+            1,
+            0
+          ],
+          "marking_scheme": [
+            [
+              "Define specialization and give a brief example.",
+              1
+            ],
+            [
+              "Define generalization and give a brief example.",
+              1
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "Nothing was provided to answer this part"
+          ]
+        },
+        {
+          "question": "What do you mean by two-levels and three-levels architecture?",
+          "total_score_question": "2",
+          "total_score_gained": 2,
+          "student_answer": "Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.\n\nThree-level architecture adds a conceptual schema between external and internal levels, with external\u2013conceptual and conceptual\u2013internal mappings, giving both logical and physical data independence.",
+          "student_answer_chunks": [
+            "<start-of-answer>Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.<end-of-answer>",
+            "<start-of-answer>Three-level architecture adds a conceptual schema between external and internal levels, with external\u2013conceptual and conceptual\u2013internal mappings, giving both logical and physical data independence.<end-of-answer>"
+          ],
+          "student_marks_chunkwise": [
+            1,
+            1
+          ],
+          "marking_scheme": [
+            [
+              "Define two-level architecture and its data\u2010independence support.",
+              1
+            ],
+            [
+              "Define three-level architecture and its additional abstraction and data\u2010independence benefits.",
+              1
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "Full score gained"
+          ]
+        },
+        {
+          "question": "Define primary key, foreign key, candidate key and super key with suitable examples.\n",
+          "total_score_question": "3",
+          "total_score_gained": 3,
+          "student_answer": "Super Key:\nA super key is any set of one or more attributes that can uniquely identify every tuple in a relation.\nExample: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.\n\nCandidate Key:\nA candidate key is a minimal super key\u2014no proper subset of it can still uniquely identify tuples.\nExample: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn\u2019t minimal).\n\nPrimary Key:\nThe primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.\nExample: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.\n\nForeign Key:\nA foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.\nExample: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.",
+          "student_answer_chunks": [
+            "<start-of-answer>  \nSuper Key:  \nA super key is any set of one or more attributes that can uniquely identify every tuple in a relation.  \nExample: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.  \n\nCandidate Key:  \nA candidate key is a minimal super key\u2014no proper subset of it can still uniquely identify tuples.  \nExample: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn\u2019t minimal).  \n<end-of-answer>",
+            "<start-of-answer>  \nPrimary Key:  \nThe primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.  \nExample: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.  \n<end-of-answer>",
+            "<start-of-answer>  \nForeign Key:  \nA foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.  \nExample: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.  \n<end-of-answer>"
+          ],
+          "student_marks_chunkwise": [
+            1,
+            1,
+            1
+          ],
+          "marking_scheme": [
+            [
+              "Define super key and candidate key and give a brief example of each.",
+              1
+            ],
+            [
+              "Define primary key and give a brief example.",
+              1
+            ],
+            [
+              "Define foreign key and give a brief example.",
+              1
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "Full score gained",
+            "Full score gained"
+          ]
+        },
+        {
+          "question": "Differentiate between lock-based concurrency control and timestamp-based concurrency control.",
+          "total_score_question": "3",
+          "total_score_gained": 3,
+          "student_answer": "Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.\n\nTimestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it\u2019s too old (i.e. less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.",
+          "student_answer_chunks": [
+            "<start-of-answer>Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.<end-of-answer>",
+            "<start-of-answer>  \nLock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.  \n\nTimestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it\u2019s too old (i.e., less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.  \n<end-of-answer>"
+          ],
+          "student_marks_chunkwise": [
+            1,
+            2
+          ],
+          "marking_scheme": [
+            [
+              "Give a clear, concise definition of either lock-based or timestamp-based concurrency control.",
+              1
+            ],
+            [
+              "State two distinct differences between lock-based and timestamp-based approaches (1 mark each), for example: \t1.\tLock-based may block and deadlock, requiring detection; timestamp-based never blocks but aborts conflicting transactions. \t2.\tLock-based enforces serializability via locks (2PL), timestamp-based uses timestamp ordering rules and maintains read/write timestamps.",
+              2
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "Full score gained"
+          ]
+        },
+        {
+          "question": "Explain normal forms in DBMS with examples for each.\n",
+          "total_score_question": "5",
+          "total_score_gained": 5,
+          "student_answer": "First Normal Form (1NF):\nA relation is in 1NF if every attribute is atomic\u2014no repeating groups or multi\u2010valued fields.\nExample:\n\n-- Violates 1NF\nStudentCourses(StudentID, Name, Courses)\n  (1, \"Alice\", {\"Math\",\"Physics\"})\n\nConvert to 1NF by one row per course:\n\nStudentCourse(StudentID, Name, Course)\n  (1, \"Alice\", \"Math\")\n  (1, \"Alice\", \"Physics\")\n\n\nSecond Normal Form (2NF):\nA relation in 1NF is in 2NF if no non\u2010key attribute is partially dependent on part of a composite key.\nExample:\n\n-- Violates 2NF (StudentName depends only on StudentID)\nEnrollment(StudentID, CourseID, StudentName, Grade)\n\nDecompose into:\n\nStudent(StudentID PK, StudentName)\nEnrollment(StudentID FK, CourseID FK, Grade, PK(StudentID,CourseID))\n\n\nThird Normal Form (3NF):\nA 2NF relation is in 3NF if every non\u2010key attribute depends only on the key (no transitive dependencies).\nExample:\n\n-- Violates 3NF (DeptName depends on DeptID, not EmpID)\nEmployee(EmpID PK, DeptID, DeptName, Salary)\n\nDecompose into:\n\nDepartment(DeptID PK, DeptName)\nEmployee(EmpID PK, DeptID FK, Salary)\n\n\nBoyce\u2013Codd Normal Form (BCNF):\nA 3NF relation is in BCNF if, for every non\u2010trivial functional dependency X\u2192Y, X is a superkey.\nExample:\n\n-- Violates BCNF because Room\u2192Instructor but Room is not a key\nCourseInstructor(Course, Instructor, Room)\n\nDecompose into:\n\nRoomAssignment(Room PK, Instructor)\nCourseRoom(Course PK, Room FK)\n\nEach step removes a specific kind of redundancy, ensuring that every fact is stored in exactly one place.",
+          "student_answer_chunks": [
+            "<start-of-answer>\nNormalization is the process of organizing the data in a database to minimize data redundancy and dependency. Each step of normalization aims to further reduce redundancy by ensuring that each piece of data is stored in one place and one place only.\n\nThe goal of applying normal forms is to ensure that every fact is stored in exactly one place, eliminating redundancy and improving data integrity.\n<end-of-answer>",
+            "<start-of-answer>\nFirst Normal Form (1NF):\nA relation is in 1NF if every attribute is atomic\u2014no repeating groups or multi\u2010valued fields.\nExample:\n\n-- Violates 1NF\nStudentCourses(StudentID, Name, Courses)\n  (1, \"Alice\", {\"Math\",\"Physics\"})\n\nConvert to 1NF by one row per course:\n\nStudentCourse(StudentID, Name, Course)\n  (1, \"Alice\", \"Math\")\n  (1, \"Alice\", \"Physics\")\n\n\nSecond Normal Form (2NF):\nA relation in 1NF is in 2NF if no non\u2010key attribute is partially dependent on part of a composite key.\nExample:\n\n-- Violates 2NF (StudentName depends only on StudentID)\nEnrollment(StudentID, CourseID, StudentName, Grade)\n\nDecompose into:\n\nStudent(StudentID PK, StudentName)\nEnrollment(StudentID FK, CourseID FK, Grade, PK(StudentID,CourseID))\n<end-of-answer>",
+            "<start-of-answer>\nThird Normal Form (3NF):\nA 2NF relation is in 3NF if every non\u2010key attribute depends only on the key (no transitive dependencies).\nExample:\n\n-- Violates 3NF (DeptName depends on DeptID, not EmpID)\nEmployee(EmpID PK, DeptID, DeptName, Salary)\n\nDecompose into:\n\nDepartment(DeptID PK, DeptName)\nEmployee(EmpID PK, DeptID FK, Salary)\n\n\nBoyce\u2013Codd Normal Form (BCNF):\nA 3NF relation is in BCNF if, for every non\u2010trivial functional dependency X\u2192Y, X is a superkey.\nExample:\n\n-- Violates BCNF because Room\u2192Instructor but Room is not a key\nCourseInstructor(Course, Instructor, Room)\n\nDecompose into:\n\nRoomAssignment(Room PK, Instructor)\nCourseRoom(Course PK, Room FK)\n<end-of-answer>"
+          ],
+          "student_marks_chunkwise": [
+            1,
+            2,
+            2
+          ],
+          "marking_scheme": [
+            [
+              "Define normalization and state the goal of applying normal forms.",
+              1
+            ],
+            [
+              "1NF & 2NF: for each, state the requirement and give a brief example.",
+              2
+            ],
+            [
+              "3NF & BCNF: for each, state the requirement and give a brief example.",
+              2
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "Full score gained",
+            "Full score gained"
+          ]
+        },
+        {
+          "question": "Explain various mapping rules to convert ERR into relational schema with example.",
+          "total_score_question": "5",
+          "total_score_gained": 3,
+          "student_answer": "To map an ER diagram into tables:\n\t1.\tStrong Entities:\n\t\u2022\tFor each regular entity, create a relation with one column per simple attribute and designate its key as the primary key.\n\t\u2022\tExample:\n\t\u2022\tEntity Student( StudentID, Name, DOB ) \u2192 table\n\nStudent(\n  StudentID PK,\n  Name,\n  DOB\n)\n\n\t2.\tOne-to-Many Relationships (1:N):\n\t\u2022\tPlace the primary key of the \u201cone\u201d side as a foreign key in the \u201cmany\u201d side\u2019s table.\n\t\u2022\tExample: A 1:N \u201cStudent \u2192 Marks\u201d relationship becomes\n\nMarks(\n  MarkID PK,\n  StudentID FK \u2192 Student.StudentID,\n  Subject,\n  Score\n)\n\n\t3.\tMany-to-Many Relationships (M:N):\n\t\u2022\tCreate a separate relation whose primary key is the combination of both sides\u2019 keys, and include any relationship attributes.\n\t\u2022\tExample: For Student M:N Course, define\n\nEnroll(\n  StudentID FK \u2192 Student.StudentID,\n  CourseID FK \u2192 Course.CourseID,\n  Grade,\n  PRIMARY KEY(StudentID, CourseID)\n)\n\nThese three rules cover most of the basic conversions needed; a fuller answer would also address weak entities, multi-valued/composite attributes, and ISA hierarchies.",
+          "student_answer_chunks": [
+            "<start-of-answer>\nTo map an ER diagram into tables:\n\n1. Strong Entities:\n\u2022 For each regular entity, create a relation with one column per simple attribute and designate its key as the primary key.\n\u2022 Example:\n\u2022 Entity Student( StudentID, Name, DOB ) \u2192 table\n\nStudent(\n  StudentID PK,\n  Name,\n  DOB\n)\n\n2. One-to-Many Relationships (1:N):\n\u2022 Place the primary key of the \u201cone\u201d side as a foreign key in the \u201cmany\u201d side\u2019s table.\n\u2022 Example: A 1:N \u201cStudent \u2192 Marks\u201d relationship becomes\n\nMarks(\n  MarkID PK,\n  StudentID FK \u2192 Student.StudentID,\n  Subject,\n  Score\n)\n<end-of-answer>",
+            "<start-of-answer>  \n\t3.\tMany-to-Many Relationships (M:N):  \n\t\u2022\tCreate a separate relation whose primary key is the combination of both sides\u2019 keys, and include any relationship attributes.  \n\t\u2022\tExample: For Student M:N Course, define  \n\nEnroll(  \n  StudentID FK \u2192 Student.StudentID,  \n  CourseID FK \u2192 Course.CourseID,  \n  Grade,  \n  PRIMARY KEY(StudentID, CourseID)  \n)  \n<end-of-answer>"
+          ],
+          "student_marks_chunkwise": [
+            2,
+            1
+          ],
+          "marking_scheme": [
+            [
+              "Strong Entity & One-to-Many Relationship Mapping: state each rule and give a brief example",
+              2
+            ],
+            [
+              "Many-to-Many Relationship, Multi-valued Attribute & Weak Entity Mapping: state each rule and give a brief example",
+              3
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "<think>\nOkay, so I need to figure out why the student only got 1 out of 3 marks for their answer on many-to-many relationships. Let me start by looking at the student's answer and the marking scheme.\n\nThe student wrote about many-to-many (M:N) relationships, explaining that a separate relation is created with a composite primary key from both entities and including any relationship attributes. They gave an example with Enroll, StudentID, CourseID, Grade, and set the primary key as (StudentID, CourseID). That seems correct based on what I remember.\n\nLooking at the marking scheme, the question was about many-to-many relationships, multi-valued attributes, and weak entity mapping. The student only addressed the M:N part. They didn't mention anything about multi-valued attributes or weak entities. That's probably why they lost marks.\n\nThe relevant theory says that for M:N, you create a new relation with the combined primary keys and any attributes. For multi-valued attributes, you create a new relation with the owner's primary key and the attribute as a composite key. For weak entities, you include the owner's key and form a composite primary key.\n\nSo the student correctly handled the M:N part but missed the other two sections. They needed to explain each rule and give examples for all three topics. Without covering multi-valued attributes and weak entities, they didn't meet the full criteria, hence the lower score.\n\nTo improve, the student should have included sections on multi-valued attributes and weak entities with their own examples. That way, they would have covered all parts of the question and possibly scored higher.\n</think>\n\n**Feedback on Many-to-Many Relationships, Multi-valued Attributes, and Weak Entity Mapping**\n\nThe student's answer correctly addressed the many-to-many (M:N) relationship by creating a separate relation with a composite primary key and including relationship attributes, as demonstrated with the Enroll example. However, the student did not cover multi-valued attributes and weak entity mapping, which were required by the question.\n\n**Score Breakdown:**\n- **Many-to-Many Relationships (1/1):** The student correctly applied the theory by creating a relation with a composite primary key and including attributes.\n- **Multi-valued Attributes (0/1):** The student did not address this, missing an opportunity to explain creating a new relation with the owner's primary key and the multi-valued attribute as a composite key.\n- **Weak Entity Mapping (0/1):** The student omitted this section, failing to describe creating a relation with the owner's key and forming a composite primary key.\n\n**Suggestions for Improvement:**\n1. **Include Multi-valued Attributes:** Explain how to create a new relation with the owner's primary key and the multi-valued attribute as a composite key, providing an example.\n2. **Address Weak Entity Mapping:** Describe how to create a relation for a weak entity, including the owner's key and forming a composite primary key, with an example.\n\nBy covering all required sections, the student would have achieved a higher score."
+          ]
+        },
+        {
+          "question": "What are the advantages of database system over file system?",
+          "total_score_question": "5",
+          "total_score_gained": 4,
+          "student_answer": "Advantages of a DBMS over a File System\n\t1.\tData Independence\n\t\tThe three\u2010level ANSI/SPARC architecture (external, conceptual, internal) means you can change the logical schema or storage layout without rewriting application programs.\n\n\t2.\tReduced Redundancy & Consistency\n\t\tA central data dictionary and enforced constraints (primary/foreign keys, UNIQUE, CHECK) prevent duplicate or conflicting copies of the same data.\n\n\t3.\tTransactions & ACID Properties\n\t\tBuilt-in support for atomic, consistent, isolated, and durable transactions ensures that updates either fully succeed or roll back on failure\u2014something the file approach must reimplement manually.\n\t\t\n\t4.\tConcurrency Control & Security\n\t\tStandard locking (2PL) or MVCC protocols let many users access and modify data safely, while GRANT/REVOKE lets you restrict operations down to tables or even columns.",
+          "student_answer_chunks": [
+            "",
+            "<start-of-answer>  \nAdvantages of a DBMS over a File System  \n\t1.\tData Independence  \n\t\tThe three\u2010level ANSI/SPARC architecture (external, conceptual, internal) means you can change the logical schema or storage layout without rewriting application programs.  \n\n\t2.\tReduced Redundancy & Consistency  \n\t\tA central data dictionary and enforced constraints (primary/foreign keys, UNIQUE, CHECK) prevent duplicate or conflicting copies of the same data.  \n<end-of-answer>",
+            "<start-of-answer>  \n3.\tTransactions & ACID Properties  \n\t\tBuilt-in support for atomic, consistent, isolated, and durable transactions ensures that updates either fully succeed or roll back on failure\u2014something the file approach must reimplement manually.  \n\t\t\n4.\tConcurrency Control & Security  \n\t\tStandard locking (2PL) or MVCC protocols let many users access and modify data safely, while GRANT/REVOKE lets you restrict operations down to tables or even columns.  \n<end-of-answer>"
+          ],
+          "student_marks_chunkwise": [
+            0,
+            2,
+            2
+          ],
+          "marking_scheme": [
+            [
+              "One\u2010sentence DBMS vs file system definition.",
+              1
+            ],
+            [
+              "Explain data independence (logical & physical) and reduced redundancy/inconsistency through a central catalog and integrity constraints.",
+              2
+            ],
+            [
+              "Cover ACID transaction support (atomicity, consistency, isolation, durability) and standardized concurrency control (2PL/MVCC) with fine-grained GRANT/REVOKE security.",
+              2
+            ]
+          ],
+          "teacher_reasoning": [
+            "Nothing was provided to answer this part",
+            "Full score gained",
+            "Full score gained"
+          ]
+        }
+      ],
+      "total_score": 21.0
+    }
+  },
+  {
+    "attempt_id": "16cc0a0e-3676-47f8-8392-4bb3c083e969",
+    "exam_id": "b3d7484e-af7c-491e-8420-b1bbd5108d26",
+    "student_id": "vaibhav0",
+    "start_time": 1747577975,
+    "answers": {
+      "0": "1. Data Independence & Reduced Redundancy: A DBMS provides logical/physical data independence and a central schema with integrity constraints, so you avoid storing duplicate or inconsistent copies of the same data.\n2. Transaction Management & Concurrency Control: Built-in ACID transactions plus locking or MVCC let multiple users safely read/write data without manual coding of rollback or deadlock handling.",
+      "1": "Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.\n\nThree-level architecture adds a conceptual schema between external and internal levels, with external\u2013conceptual and conceptual\u2013internal mappings, giving both logical and physical data independence.",
+      "2": "Super Key:\nA super key is any set of one or more attributes that can uniquely identify every tuple in a relation.\nExample: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.\n\nCandidate Key:\nA candidate key is a minimal super key\u2014no proper subset of it can still uniquely identify tuples.\nExample: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn\u2019t minimal).\n\nPrimary Key:\nThe primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.\nExample: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.\n\nForeign Key:\nA foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.\nExample: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.",
+      "3": "Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.\n\nTimestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it\u2019s too old (i.e. less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.",
+      "4": "First Normal Form (1NF):\nA relation is in 1NF if every attribute is atomic\u2014no repeating groups or multi\u2010valued fields.\nExample:\n\nSecond Normal Form (2NF):\nA relation in 1NF is in 2NF if no non\u2010key attribute is partially dependent on part of a composite key.\nExample:\n\n-- Violates 2NF (StudentName depends only on StudentID)\nEnrollment(StudentID, CourseID, StudentName, Grade)\n\nDecompose into:\n\nStudent(StudentID PK, StudentName)\nEnrollment(StudentID FK, CourseID FK, Grade, PK(StudentID,CourseID))\n\n\nThird Normal Form (3NF):\nA 2NF relation is in 3NF if every non\u2010key attribute depends only on the key (no transitive dependencies).\nExample:\n\n-- Violates 3NF (DeptName depends on DeptID, not EmpID)\nEmployee(EmpID PK, DeptID, DeptName, Salary)\n\nDecompose into:\n\nDepartment(DeptID PK, DeptName)\nEmployee(EmpID PK, DeptID FK, Salary)\n\n\nBoyce\u2013Codd Normal Form (BCNF):\nA 3NF relation is in BCNF if, for every non\u2010trivial functional dependency X\u2192Y, X is a superkey.",
+      "5": "To map an ER diagram into tables:\n\t1.\tStrong Entities:\n\t\u2022\tFor each regular entity, create a relation with one column per simple attribute and designate its key as the primary key.\n\t\u2022\tExample:\n\t\u2022\tEntity Student( StudentID, Name, DOB ) \u2192 table\n\nStudent(\n  StudentID PK,\n  Name,\n  DOB\n)\n\n\t2.\tOne-to-Many Relationships (1:N):\n\t\u2022\tPlace the primary key of the \u201cone\u201d side as a foreign key in the \u201cmany\u201d side\u2019s table.\n\t\u2022\tExample: A 1:N \u201cStudent \u2192 Marks\u201d relationship becomes\n\nMarks(\n  MarkID PK,\n  StudentID FK \u2192 Student.StudentID,\n  Subject,\n  Score\n)\n\n\t3.\tMany-to-Many Relationships (M:N):\n\t\u2022\tCreate a separate relation whose primary key is the combination of both sides\u2019 keys, and include any relationship attributes.\n\t\u2022\tExample: For Student M:N Course, define\n\nEnroll(\n  StudentID FK \u2192 Student.StudentID,\n  CourseID FK \u2192 Course.CourseID,\n  Grade,\n  PRIMARY KEY(StudentID, CourseID)\n)\n\nThese three rules cover most of the basic conversions needed; a fuller answer would also address weak entities, multi-valued/composite attributes, and ISA hierarchies.",
+      "6": "Advantages of a DBMS over a File System\n\t1.\tData Independence\n\t\tThe three\u2010level ANSI/SPARC architecture (external, conceptual, internal) means you can change the logical schema or storage layout without rewriting application programs.\n\n\t2.\tReduced Redundancy & Consistency\n\t\tA central data dictionary and enforced constraints (primary/foreign keys, UNIQUE, CHECK) prevent duplicate or conflicting copies of the same data.\n\n\t3.\tTransactions & ACID Properties\n\t\tBuilt-in support for atomic, consistent, isolated, and durable transactions ensures that updates either fully succeed or roll back on failure\u2014something the file approach must reimplement manually.\n\t\t\n\t4.\tConcurrency Control & Security\n\t\tStandard locking (2PL) or MVCC protocols let many users access and modify data safely, while GRANT/REVOKE lets you restrict operations down to tables or even columns."
+    },
+    "submitted": true,
+    "end_time": 1747578268,
+    "evaluation_status": {
+      "overall": "error",
+      "questions": [
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "error",
+          "step": "1 validation error for grade_student_final_outut\n  The totalling for the answer came out to be 5.5 which is greater than the max possibe score 5 [type=MarksOverflow, input_value={'marks_list': [grade_stu...2)], 'total_score': '5'}, input_type=dict]"
+        },
+        {
+          "status": "pending",
+          "step": ""
+        },
+        {
+          "status": "pending",
+          "step": ""
+        }
+      ]
+    }
+  },
+  {
+    "attempt_id": "1e21466a-50f1-4260-b418-8194fbef355e",
+    "exam_id": "b3d7484e-af7c-491e-8420-b1bbd5108d26",
+    "student_id": "vaibhav0",
+    "start_time": 1747579064,
+    "answers": {
+      "0": "Specialization is a top-down modeling technique in EER where a broad entity type is divided into more specific subtypes based on distinguishing attributes. For example, a Vehicle entity with attributes (VehicleID, Make, ModelYear) can be specialized into two subclasses:\n\t- Car with additional attribute NumDoors\n\t- Truck with additional attribute PayloadCapacity\n\nThis means every Vehicle instance must be classified as either a Car or a Truck, inheriting the common attributes (VehicleID, Make, ModelYear) while also having its subtype\u2019s specific properties.",
+      "1": "Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.\n\nThree-level architecture adds a conceptual schema between external and internal levels, with external\u2013conceptual and conceptual\u2013internal mappings, giving both logical and physical data independence.",
+      "2": "Super Key:\nA super key is any set of one or more attributes that can uniquely identify every tuple in a relation.\nExample: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.\n\nCandidate Key:\nA candidate key is a minimal super key\u2014no proper subset of it can still uniquely identify tuples.\nExample: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn\u2019t minimal).\n\nPrimary Key:\nThe primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.\nExample: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.\n\nForeign Key:\nA foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.\nExample: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.",
+      "3": "Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.\n\nTimestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it\u2019s too old (i.e. less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.",
+      "4": "First Normal Form (1NF):\nA relation is in 1NF if every attribute is atomic\u2014no repeating groups or multi\u2010valued fields.\nExample:\n\nSecond Normal Form (2NF):\nA relation in 1NF is in 2NF if no non\u2010key attribute is partially dependent on part of a composite key.\nExample:\n\n-- Violates 2NF (StudentName depends only on StudentID)\nEnrollment(StudentID, CourseID, StudentName, Grade)\n\nDecompose into:\n\n\nThird Normal Form (3NF):\nA 2NF relation is in 3NF if every non\u2010key attribute depends only on the key (no transitive dependencies).\nExample:\n\n-- Violates 3NF (DeptName depends on DeptID, not EmpID)\nEmployee(EmpID PK, DeptID, DeptName, Salary)\n\nDecompose into:\n\nDepartment(DeptID PK, DeptName)\nEmployee(EmpID PK, DeptID FK, Salary)\n\n",
+      "5": "To map an ER diagram into tables:\n\t1.\tStrong Entities:\n\t\u2022\tFor each regular entity, create a relation with one column per simple attribute and designate its key as the primary key.\n\t\u2022\tExample:\n\t\u2022\tEntity Student( StudentID, Name, DOB ) \u2192 table\n\nStudent(\n  StudentID PK,\n  Name,\n  DOB\n)\n\n\t2.\tOne-to-Many Relationships (1:N):\n\t\u2022\tPlace the primary key of the \u201cone\u201d side as a foreign key in the \u201cmany\u201d side\u2019s table.\n\t\u2022\tExample: A 1:N \u201cStudent \u2192 Marks\u201d relationship becomes\n\nMarks(\n  MarkID PK,\n  StudentID FK \u2192 Student.StudentID,\n  Subject,\n  Score\n)\n\n\t3.\tMany-to-Many Relationships (M:N):\n\t\u2022\tCreate a separate relation whose primary key is the combination of both sides\u2019 keys, and include any relationship attributes.\n\t\u2022\tExample: For Student M:N Course, define\n\nEnroll(\n  StudentID FK \u2192 Student.StudentID,\n  CourseID FK \u2192 Course.CourseID,\n  Grade,\n  PRIMARY KEY(StudentID, CourseID)\n)\n\nThese three rules cover most of the basic conversions needed; a fuller answer would also address weak entities, multi-valued/composite attributes, and ISA hierarchies.",
+      "6": "Advantages of a DBMS over a File System\n\t1.\tData Independence\n\t\tThe three\u2010level ANSI/SPARC architecture (external, conceptual, internal) means you can change the logical schema or storage layout without rewriting application programs.\n\n\t2.\tReduced Redundancy & Consistency\n\t\tA central data dictionary and enforced constraints (primary/foreign keys, UNIQUE, CHECK) prevent duplicate or conflicting copies of the same data.\n\n\t3.\tTransactions & ACID Properties\n\t\tBuilt-in support for atomic, consistent, isolated, and durable transactions ensures that updates either fully succeed or roll back on failure\u2014something the file approach must reimplement manually.\n\t\t\n\t4.\tConcurrency Control & Security\n\t\tStandard locking (2PL) or MVCC protocols let many users access and modify data safely, while GRANT/REVOKE lets you restrict operations down to tables or even columns."
+    },
+    "submitted": true,
+    "end_time": 1747579175,
+    "evaluation_status": {
+      "overall": "in_progress",
+      "questions": [
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "in_progress",
+          "step": "Evaluating"
+        },
+        {
+          "status": "pending",
+          "step": ""
+        }
+      ]
+    }
+  },
+  {
+    "attempt_id": "a1dce1e4-d307-4ed1-b354-76a4914f0ee0",
+    "exam_id": "b3d7484e-af7c-491e-8420-b1bbd5108d26",
+    "student_id": "vaibhav0",
+    "start_time": 1747579584,
+    "answers": {
+      "0": "Specialization is a top-down modeling technique in EER where a broad entity type is divided into more specific subtypes based on distinguishing attributes. For example, a Vehicle entity with attributes (VehicleID, Make, ModelYear) can be specialized into two subclasses:\n\t- Car with additional attribute NumDoors\n\t- Truck with additional attribute PayloadCapacity\n\nThis means every Vehicle instance must be classified as either a Car or a Truck, inheriting the common attributes (VehicleID, Make, ModelYear) while also having its subtype\u2019s specific properties.",
+      "1": "Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.\n\nThree-level architecture adds a conceptual schema between external and internal levels, with external\u2013conceptual and conceptual\u2013internal mappings, giving both logical and physical data independence.",
+      "2": "Super Key:\nA super key is any set of one or more attributes that can uniquely identify every tuple in a relation.\nExample: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.\n\nCandidate Key:\nA candidate key is a minimal super key\u2014no proper subset of it can still uniquely identify tuples.\nExample: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn\u2019t minimal).\n\nPrimary Key:\nThe primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.\nExample: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.\n\nForeign Key:\nA foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.\nExample: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.",
+      "3": "Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.\n\nTimestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it\u2019s too old (i.e. less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.",
+      "4": "First Normal Form (1NF):\nA relation is in 1NF if every attribute is atomic\u2014no repeating groups or multi\u2010valued fields.\n\n\nSecond Normal Form (2NF):\nA relation in 1NF is in 2NF if no non\u2010key attribute is partially dependent on part of a composite key.\n\nThird Normal Form (3NF):\nA 2NF relation is in 3NF if every non\u2010key attribute depends only on the key (no transitive dependencies).\nExample:\n\n-- Violates 3NF (DeptName depends on DeptID, not EmpID)\nEmployee(EmpID PK, DeptID, DeptName, Salary)\n\nDecompose into:\n\nEach step removes a specific kind of redundancy, ensuring that every fact is stored in exactly one place.",
+      "5": "To map an ER diagram into tables:\n\t1.\tStrong Entities:\n\t\u2022\tFor each regular entity, create a relation with one column per simple attribute and designate its key as the primary key.\n\t\u2022\tExample:\n\t\u2022\tEntity Student( StudentID, Name, DOB ) \u2192 table\n\nStudent(\n  StudentID PK,\n  Name,\n  DOB\n)\n\n\t2.\tOne-to-Many Relationships (1:N):\n\t\u2022\tPlace the primary key of the \u201cone\u201d side as a foreign key in the \u201cmany\u201d side\u2019s table.\n\t\u2022\tExample: A 1:N \u201cStudent \u2192 Marks\u201d relationship becomes\n\nMarks(\n  MarkID PK,\n  StudentID FK \u2192 Student.StudentID,\n  Subject,\n  Score\n)\n\n\t3.\tMany-to-Many Relationships (M:N):\n\t\u2022\tCreate a separate relation whose primary key is the combination of both sides\u2019 keys, and include any relationship attributes.\n\t\u2022\tExample: For Student M:N Course, define\n\nEnroll(\n  StudentID FK \u2192 Student.StudentID,\n  CourseID FK \u2192 Course.CourseID,\n  Grade,\n  PRIMARY KEY(StudentID, CourseID)\n)\n\nThese three rules cover most of the basic conversions needed; a fuller answer would also address weak entities, multi-valued/composite attributes, and ISA hierarchies.",
+      "6": "Advantages of a DBMS over a File System\n\t1.\tData Independence\n\t\tThe three\u2010level ANSI/SPARC architecture (external, conceptual, internal) means you can change the logical schema or storage layout without rewriting application programs.\n\n\t2.\tReduced Redundancy & Consistency\n\t\tA central data dictionary and enforced constraints (primary/foreign keys, UNIQUE, CHECK) prevent duplicate or conflicting copies of the same data.\n\n\t3.\tTransactions & ACID Properties\n\t\tBuilt-in support for atomic, consistent, isolated, and durable transactions ensures that updates either fully succeed or roll back on failure\u2014something the file approach must reimplement manually.\n\t\t\n\t4.\tConcurrency Control & Security\n\t\tStandard locking (2PL) or MVCC protocols let many users access and modify data safely, while GRANT/REVOKE lets you restrict operations down to tables or even columns."
+    },
+    "submitted": true,
+    "end_time": 1747579727,
+    "evaluation_status": {
+      "overall": "error",
+      "questions": [
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "error",
+          "step": "Error code: 500 - {'error': {'message': 'Internal Server Error', 'type': 'internal_server_error'}}"
+        },
+        {
+          "status": "pending",
+          "step": ""
+        },
+        {
+          "status": "pending",
+          "step": ""
+        },
+        {
+          "status": "pending",
+          "step": ""
+        },
+        {
+          "status": "pending",
+          "step": ""
+        }
+      ]
+    }
+  },
+  {
+    "attempt_id": "96ce8d16-2835-4681-a708-cc590b3bf4c4",
+    "exam_id": "b3d7484e-af7c-491e-8420-b1bbd5108d26",
+    "student_id": "vaibhav0",
+    "start_time": 1747580172,
+    "answers": {
+      "0": "Specialization is a top-down modeling technique in EER where a broad entity type is divided into more specific subtypes based on distinguishing attributes. For example, a Vehicle entity with attributes (VehicleID, Make, ModelYear) can be specialized into two subclasses:\n\t- Car with additional attribute NumDoors\n\t- Truck with additional attribute PayloadCapacity\n\nThis means every Vehicle instance must be classified as either a Car or a Truck, inheriting the common attributes (VehicleID, Make, ModelYear) while also having its subtype\u2019s specific properties.",
+      "1": "Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.\n\nThree-level architecture adds a conceptual schema between external and internal levels, with external\u2013conceptual and conceptual\u2013internal mappings, giving both logical and physical data independence.",
+      "2": "Super Key:\nA super key is any set of one or more attributes that can uniquely identify every tuple in a relation.\nExample: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.\n\nCandidate Key:\nA candidate key is a minimal super key\u2014no proper subset of it can still uniquely identify tuples.\nExample: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn\u2019t minimal).\n\nPrimary Key:\nThe primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.\nExample: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.\n\nForeign Key:\nA foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.\nExample: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.",
+      "3": "Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.\n\nTimestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it\u2019s too old (i.e. less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.",
+      "4": "First Normal Form (1NF):\nA relation is in 1NF if every attribute is atomic\u2014no repeating groups or multi\u2010valued fields.\n\n\nSecond Normal Form (2NF):\nA relation in 1NF is in 2NF if no non\u2010key attribute is partially dependent on part of a composite key.\nExample:\n\n\nThird Normal Form (3NF):\nA 2NF relation is in 3NF if every non\u2010key attribute depends only on the key (no transitive dependencies).\nExample:\n\n-- Violates 3NF (DeptName depends on DeptID, not EmpID)\nEmployee(EmpID PK, DeptID, DeptName, Salary)\n\n\n\nEach step removes a specific kind of redundancy, ensuring that every fact is stored in exactly one place.",
+      "5": "Advantages of a DBMS over a File System\n\t1.\tData Independence\n\t\tThe three\u2010level ANSI/SPARC architecture (external, conceptual, internal) means you can change the logical schema or storage layout without rewriting application programs.\n\n\t2.\tReduced Redundancy & Consistency\n\t\tA central data dictionary and enforced constraints (primary/foreign keys, UNIQUE, CHECK) prevent duplicate or conflicting copies of the same data.\n\n\t3.\tTransactions & ACID Properties\n\t\tBuilt-in support for atomic, consistent, isolated, and durable transactions ensures that updates either fully succeed or roll back on failure\u2014something the file approach must reimplement manually.\n\t\t\n\t4.\tConcurrency Control & Security\n\t\tStandard locking (2PL) or MVCC protocols let many users access and modify data safely, while GRANT/REVOKE lets you restrict operations down to tables or even columns."
+    },
+    "submitted": true,
+    "end_time": 1747580535,
+    "evaluation_status": {
+      "overall": "done",
+      "questions": [
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        },
+        {
+          "status": "done",
+          "step": "Done"
+        }
+      ]
+    },
+    "evaluation_result": {
+      "subject": "DBMS Mid Sem Exam",
+      "number-of-questions": 7,
+      "results": [
+        {
+          "question": "Explain with example, specialization and generalization.",
+          "total_score_question": "2",
+          "total_score_gained": 1,
+          "student_answer": "Specialization is a top-down modeling technique in EER where a broad entity type is divided into more specific subtypes based on distinguishing attributes. For example, a Vehicle entity with attributes (VehicleID, Make, ModelYear) can be specialized into two subclasses:\n\t- Car with additional attribute NumDoors\n\t- Truck with additional attribute PayloadCapacity\n\nThis means every Vehicle instance must be classified as either a Car or a Truck, inheriting the common attributes (VehicleID, Make, ModelYear) while also having its subtype\u2019s specific properties.",
+          "student_answer_chunks": [
+            "<start-of-answer>Specialization is a top-down modeling technique in EER where a broad entity type is divided into more specific subtypes based on distinguishing attributes. For example, a Vehicle entity with attributes (VehicleID, Make, ModelYear) can be specialized into two subclasses: Car with additional attribute NumDoors and Truck with additional attribute PayloadCapacity. This means every Vehicle instance must be classified as either a Car or a Truck, inheriting the common attributes (VehicleID, Make, ModelYear) while also having its subtype\u2019s specific properties.<end-of-answer>",
+            ""
+          ],
+          "student_marks_chunkwise": [
+            1,
+            0
+          ],
+          "marking_scheme": [
+            [
+              "Define specialization and give a brief example.",
+              1
+            ],
+            [
+              "Define generalization and give a brief example.",
+              1
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "Nothing was provided to answer this part"
+          ]
+        },
+        {
+          "question": "What do you mean by two-levels and three-levels architecture?",
+          "total_score_question": "2",
+          "total_score_gained": 2,
+          "student_answer": "Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.\n\nThree-level architecture adds a conceptual schema between external and internal levels, with external\u2013conceptual and conceptual\u2013internal mappings, giving both logical and physical data independence.",
+          "student_answer_chunks": [
+            "<start-of-answer>Two-level architecture has just an external schema (user views) and an internal schema (physical storage) with a direct mapping between them, so it only supports physical data independence.<end-of-answer>",
+            "<start-of-answer>Three-level architecture adds a conceptual schema between external and internal levels, with external\u2013conceptual and conceptual\u2013internal mappings, giving both logical and physical data independence.<end-of-answer>"
+          ],
+          "student_marks_chunkwise": [
+            1,
+            1
+          ],
+          "marking_scheme": [
+            [
+              "Define two-level architecture and its data\u2010independence support.",
+              1
+            ],
+            [
+              "Define three-level architecture and its additional abstraction and data\u2010independence benefits.",
+              1
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "Full score gained"
+          ]
+        },
+        {
+          "question": "Define primary key, foreign key, candidate key and super key with suitable examples.\n",
+          "total_score_question": "3",
+          "total_score_gained": 3,
+          "student_answer": "Super Key:\nA super key is any set of one or more attributes that can uniquely identify every tuple in a relation.\nExample: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.\n\nCandidate Key:\nA candidate key is a minimal super key\u2014no proper subset of it can still uniquely identify tuples.\nExample: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn\u2019t minimal).\n\nPrimary Key:\nThe primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.\nExample: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.\n\nForeign Key:\nA foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.\nExample: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.",
+          "student_answer_chunks": [
+            "<start-of-answer>  \nSuper Key:  \nA super key is any set of one or more attributes that can uniquely identify every tuple in a relation.  \nExample: In Student(StudentID, Name, Email), {StudentID}, {Email}, and {StudentID, Email} are all super keys because each combination is guaranteed to be unique.  \n\nCandidate Key:  \nA candidate key is a minimal super key\u2014no proper subset of it can still uniquely identify tuples.  \nExample: From the same Student table, {StudentID} and {Email} are candidate keys (we drop {StudentID, Email} because it isn\u2019t minimal).  \n<end-of-answer>",
+            "<start-of-answer>  \nPrimary Key:  \nThe primary key is the candidate key chosen by the designer to identify tuples. It must enforce uniqueness.  \nExample: We designate StudentID in Student(StudentID, Name, Email) as the primary key to identify each student.  \n<end-of-answer>",
+            "<start-of-answer>  \nForeign Key:  \nA foreign key is an attribute (or set of attributes) in one relation that refers to the primary key of another, enforcing a link between them.  \nExample: In Enrollment(EnrollID, StudentID, CourseID), StudentID is a foreign key referencing Student(StudentID), so every enrollment row must correspond to an existing student.  \n<end-of-answer>"
+          ],
+          "student_marks_chunkwise": [
+            1,
+            1,
+            1
+          ],
+          "marking_scheme": [
+            [
+              "Define super key and candidate key and give a brief example of each.",
+              1
+            ],
+            [
+              "Define primary key and give a brief example.",
+              1
+            ],
+            [
+              "Define foreign key and give a brief example.",
+              1
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "Full score gained",
+            "Full score gained"
+          ]
+        },
+        {
+          "question": "Differentiate between lock-based concurrency control and timestamp-based concurrency control.",
+          "total_score_question": "3",
+          "total_score_gained": 3,
+          "student_answer": "Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.\n\nTimestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it\u2019s too old (i.e. less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.",
+          "student_answer_chunks": [
+            "<start-of-answer>Lock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.<end-of-answer>",
+            "<start-of-answer>  \nLock-based concurrency control uses shared (S) and exclusive (X) locks to coordinate access: a transaction must acquire an S-lock to read and an X-lock to write a data item. Under Two-Phase Locking (2PL), transactions first acquire all needed locks (growing phase) and then release them (shrinking phase). Because transactions block when locks aren\u2019t available, deadlocks can occur and must be detected and resolved by aborting one of the transactions.  \n\nTimestamp-based concurrency control assigns each transaction a unique start timestamp and maintains, for each data item, the highest read-timestamp and write-timestamp seen so far. When a transaction tries to read or write, its timestamp is compared against these; if it\u2019s too old (i.e., less than the write-timestamp for a read, or less than the read-timestamp for a write), the transaction is aborted rather than forced to wait. This approach eliminates deadlocks but can lead to higher abort rates under contention.  \n<end-of-answer>"
+          ],
+          "student_marks_chunkwise": [
+            1,
+            2
+          ],
+          "marking_scheme": [
+            [
+              "Give a clear, concise definition of either lock-based or timestamp-based concurrency control.",
+              1
+            ],
+            [
+              "State two distinct differences between lock-based and timestamp-based approaches (1 mark each), for example: \t1.\tLock-based may block and deadlock, requiring detection; timestamp-based never blocks but aborts conflicting transactions. \t2.\tLock-based enforces serializability via locks (2PL), timestamp-based uses timestamp ordering rules and maintains read/write timestamps.",
+              2
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "Full score gained"
+          ]
+        },
+        {
+          "question": "Explain normal forms in DBMS with examples for each.\n",
+          "total_score_question": "5",
+          "total_score_gained": 3,
+          "student_answer": "First Normal Form (1NF):\nA relation is in 1NF if every attribute is atomic\u2014no repeating groups or multi\u2010valued fields.\n\n\nSecond Normal Form (2NF):\nA relation in 1NF is in 2NF if no non\u2010key attribute is partially dependent on part of a composite key.\nExample:\n\n\nThird Normal Form (3NF):\nA 2NF relation is in 3NF if every non\u2010key attribute depends only on the key (no transitive dependencies).\nExample:\n\n-- Violates 3NF (DeptName depends on DeptID, not EmpID)\nEmployee(EmpID PK, DeptID, DeptName, Salary)\n\n\n\nEach step removes a specific kind of redundancy, ensuring that every fact is stored in exactly one place.",
+          "student_answer_chunks": [
+            "<start-of-answer>Each step removes a specific kind of redundancy, ensuring that every fact is stored in exactly one place.<end-of-answer>",
+            "<start-of-answer>\nFirst Normal Form (1NF):\nA relation is in 1NF if every attribute is atomic\u2014no repeating groups or multi\u2010valued fields.\n\n\nSecond Normal Form (2NF):\nA relation in 1NF is in 2NF if no non\u2010key attribute is partially dependent on part of a composite key.\n<end-of-answer>",
+            ""
+          ],
+          "student_marks_chunkwise": [
+            1,
+            2,
+            0
+          ],
+          "marking_scheme": [
+            [
+              "Define normalization and state the goal of applying normal forms.",
+              1
+            ],
+            [
+              "1NF & 2NF: for each, state the requirement and give a brief example.",
+              2
+            ],
+            [
+              "3NF & BCNF: for each, state the requirement and give a brief example.",
+              2
+            ]
+          ],
+          "teacher_reasoning": [
+            "Full score gained",
+            "Full score gained",
+            "Nothing was provided to answer this part"
+          ]
+        },
+        {
+          "question": "Explain various mapping rules to convert ERR into relational schema with example.",
+          "total_score_question": "5",
+          "total_score_gained": 0,
+          "student_answer": "Advantages of a DBMS over a File System\n\t1.\tData Independence\n\t\tThe three\u2010level ANSI/SPARC architecture (external, conceptual, internal) means you can change the logical schema or storage layout without rewriting application programs.\n\n\t2.\tReduced Redundancy & Consistency\n\t\tA central data dictionary and enforced constraints (primary/foreign keys, UNIQUE, CHECK) prevent duplicate or conflicting copies of the same data.\n\n\t3.\tTransactions & ACID Properties\n\t\tBuilt-in support for atomic, consistent, isolated, and durable transactions ensures that updates either fully succeed or roll back on failure\u2014something the file approach must reimplement manually.\n\t\t\n\t4.\tConcurrency Control & Security\n\t\tStandard locking (2PL) or MVCC protocols let many users access and modify data safely, while GRANT/REVOKE lets you restrict operations down to tables or even columns.",
+          "student_answer_chunks": [
+            "",
+            ""
+          ],
+          "student_marks_chunkwise": [
+            0,
+            0
+          ],
+          "marking_scheme": [
+            [
+              "Strong Entity & One-to-Many Relationship Mapping: state each rule and give a brief example",
+              2
+            ],
+            [
+              "Many-to-Many Relationship, Multi-valued Attribute & Weak Entity Mapping: state each rule and give a brief example",
+              3
+            ]
+          ],
+          "teacher_reasoning": [
+            "Nothing was provided to answer this part",
+            "Nothing was provided to answer this part"
+          ]
+        },
+        {
+          "question": "What are the advantages of database system over file system?",
+          "total_score_question": "5",
+          "total_score_gained": 4,
+          "student_answer": "",
+          "student_answer_chunks": [
+            "",
+            "<start-of-answer>\nData independence refers to the ability to change the storage devices or the structure of data without affecting the application programs that use the data. There are two types of data independence: logical and physical. Logical data independence deals with changes to the logical structure of data, such as adding or removing attributes, while physical data independence deals with changes to the physical storage devices or data storage structures, such as changing the location of data or the storage medium.\n\nReduced redundancy and inconsistency can be achieved through the use of a central catalog and integrity constraints. A central catalog serves as a single source of truth for data definitions, ensuring consistency across the system. Integrity constraints, such as primary keys, foreign keys, and check constraints, enforce rules that prevent invalid data entries and maintain data integrity. By having these mechanisms in place, redundancy is minimized, and inconsistencies in the data are avoided.\n<end-of-answer>",
+            "<start-of-answer>\nACID transaction support is a set of properties that ensure database transactions are processed reliably. Atomicity ensures that transactions are completed in their entirety or not at all. Consistency guarantees that the database remains in a valid state before and after a transaction. Isolation allows multiple transactions to occur concurrently without interfering with each other, and durability ensures that once a transaction is committed, it remains committed even in the event of a failure.\n\nStandardized concurrency control mechanisms like Two-Phase Locking (2PL) and Multi-Version Concurrency Control (MVCC) help manage concurrent access to data. 2PL uses locks to ensure data consistency, while MVCC provides each transaction with a snapshot of the database, improving concurrency without locking. Fine-grained GRANT/REVOKE security allows precise control over user permissions, ensuring that users only have access to the data and operations they need.\n<end-of-answer>"
+          ],
+          "student_marks_chunkwise": [
+            0,
+            2,
+            2
+          ],
+          "marking_scheme": [
+            [
+              "One\u2010sentence DBMS vs file system definition.",
+              1
+            ],
+            [
+              "Explain data independence (logical & physical) and reduced redundancy/inconsistency through a central catalog and integrity constraints.",
+              2
+            ],
+            [
+              "Cover ACID transaction support (atomicity, consistency, isolation, durability) and standardized concurrency control (2PL/MVCC) with fine-grained GRANT/REVOKE security.",
+              2
+            ]
+          ],
+          "teacher_reasoning": [
+            "Nothing was provided to answer this part",
+            "Full score gained",
+            "Full score gained"
+          ]
+        }
+      ],
+      "total_score": 16.0
+    }
   }
 ]

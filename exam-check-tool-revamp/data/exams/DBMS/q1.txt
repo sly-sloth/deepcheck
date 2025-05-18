@@ -1,0 +1,79 @@
+Question:
+Explain with example, specialization and generalization.
+
+====================================================================================
+
+Marks:
+2
+
+====================================================================================
+
+Relevant Theory:
+Specialization and Generalization in EER Modeling
+
+Both specialization and generalization capture “is-a” hierarchies among entity types, but they work in opposite directions:
+
+
+1. Specialization (Top-Down)
+	•	Definition: Starting from a broad superclass, define more specific subclasses by partitioning its entities according to distinguishing properties.
+	•	Notation: A triangle labeled “is-a” points from the superclass down to its subclasses, optionally annotated with constraints.
+	•	Constraints:
+	•	Disjointness:
+	•	Disjoint (d): an instance of the superclass can belong to at most one subclass.
+	•	Overlapping (o): an instance may belong to multiple subclasses.
+	•	Completeness:
+	•	Total (t): every superclass instance must be in at least one subclass.
+	•	Partial (p): some superclass instances need not appear in any subclass.
+	•	Example:
+
+Superclass: Vehicle(VehicleID, Manufacturer, ModelYear)  
+Subclasses:  
+  – Car(NumDoors, IsElectric)  
+  – Truck(PayloadCapacity)  
+Constraints: disjoint, total  
+
+Here every Vehicle is either a Car or a Truck (total), and never both (disjoint).
+
+
+2. Generalization (Bottom-Up)
+	•	Definition: Starting from multiple related entity types, extract their common attributes into a single superclass, reducing redundancy.
+	•	Process: Identify shared properties, promote them to a new generic entity, and make the originals its subclasses.
+	•	Example:
+
+Original Entity Types:  
+  – Employee(EmployeeID, Name, HireDate, Salary)  
+  – Customer(CustomerID, Name, SignupDate, Email)  
+
+Generalize into:  
+  Superclass: Person(PersonID, Name)  
+  Subclasses:  
+    – Employee(PersonID PK → EmployeeID, HireDate, Salary)  
+    – Customer(PersonID PK → CustomerID, SignupDate, Email)  
+
+
+3. Key Points
+	•	Inheritance: Subclasses inherit all attributes and relationships of their superclass.
+	•	Design Choice:
+	•	Use specialization when you start with a general concept and need to model specific variants.
+	•	Use generalization when you see multiple entities sharing common features that can be abstracted.
+	•	Benefits:
+	•	Improves clarity and avoids redundant attribute definitions.
+	•	Supports polymorphism in database applications (queries on the superclass return subclass instances).
+
+====================================================================================
+
+Sample Student Answer:
+Specialization is a top-down modeling technique in EER where a broad entity type is divided into more specific subtypes based on distinguishing attributes. For example, a Vehicle entity with attributes (VehicleID, Make, ModelYear) can be specialized into two subclasses:
+	- Car with additional attribute NumDoors
+	- Truck with additional attribute PayloadCapacity
+
+This means every Vehicle instance must be classified as either a Car or a Truck, inheriting the common attributes (VehicleID, Make, ModelYear) while also having its subtype’s specific properties.
+
+====================================================================================
+
+Marking Scheme:
+1
+Define specialization and give a brief example.
+
+1
+Define generalization and give a brief example.

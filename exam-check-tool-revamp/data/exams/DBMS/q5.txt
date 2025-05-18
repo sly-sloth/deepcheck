@@ -1,0 +1,145 @@
+Question:
+Explain normal forms in DBMS with examples for each.
+
+====================================================================================
+
+Marks:
+5
+
+====================================================================================
+
+Relevant Theory:
+Relational normal forms and how they eliminate redundancy and update anomalies, with a brief schema example for each:
+
+First Normal Form (1NF)
+	•	Requirement: All attributes must have atomic (indivisible) values; each column contains only scalar values, and each row/column intersection holds exactly one value.
+	•	Why: Prevents repeating groups and ensures a flat table structure.
+	•	Example:
+
+StudentCourses(StudentID, Name, Courses)  
+
+violates 1NF if Courses = {“Math, Physics”}. To bring into 1NF:
+
+StudentCourse(StudentID, Name, Course)  
+
+so each row has a single Course.
+
+
+Second Normal Form (2NF)
+	•	Prerequisite: Relation is in 1NF.
+	•	Requirement: No partial dependencies of non-key attributes on part of a composite primary key. Every non-key attribute must depend on the whole key.
+	•	Why: Eliminates redundancy when a relation’s key is composite.
+	•	Example:
+
+Enrollment(StudentID, CourseID, StudentName, Grade)  
+
+Primary key = (StudentID, CourseID). StudentName depends only on StudentID (partial dependency). To achieve 2NF:
+
+Student(StudentID PK, StudentName)  
+Enrollment(StudentID FK, CourseID FK, Grade,  PK(StudentID,CourseID))  
+
+
+Third Normal Form (3NF)
+	•	Prerequisite: Relation is in 2NF.
+	•	Requirement: No transitive dependencies—no non-key attribute depends on another non-key attribute.
+	•	Why: Ensures that every non-key attribute depends only on the key, not on other non-key attributes.
+	•	Example:
+
+Employee(EmpID, DeptID, DeptName, Salary)  
+
+Here DeptName depends on DeptID (non-key) → transitive dependency. To achieve 3NF:
+
+Department(DeptID PK, DeptName)  
+Employee(EmpID PK, DeptID FK, Salary)  
+
+
+Boyce–Codd Normal Form (BCNF)
+	•	Prerequisite: Relation is in 3NF.
+	•	Requirement: For every non-trivial functional dependency X → Y, X must be a superkey.
+	•	Why: Handles edge-cases 3NF doesn’t cover, where a candidate key is composite and another non-key attribute functionally determines part of it.
+	•	Example:
+
+CourseInstructor(Course, Instructor, Room)  
+
+with FDs: (Course, Instructor) → Room and Room → Instructor. Here Room → Instructor violates BCNF because Room isn’t a key. Decompose to:
+
+RoomAssignment(Room PK, Instructor)  
+CourseRoom(Course PK, Room FK)  
+
+
+Higher Normal Forms (briefly)
+	•	Fourth Normal Form (4NF): No non-trivial multi-valued dependencies; each independent multi-valued fact goes in its own table.
+	•	Fifth Normal Form (5NF): No join dependencies that aren’t implied by candidate keys; prevents certain kinds of reconstruction anomalies.
+
+
+Together, these progressive constraints—1NF through BCNF (and beyond)—systematically reduce redundancy and ensure that each fact in the database is stored in exactly one place.
+
+====================================================================================
+
+Sample Student Answer:
+First Normal Form (1NF):
+A relation is in 1NF if every attribute is atomic—no repeating groups or multi‐valued fields.
+Example:
+
+-- Violates 1NF
+StudentCourses(StudentID, Name, Courses)
+  (1, "Alice", {"Math","Physics"})
+
+Convert to 1NF by one row per course:
+
+StudentCourse(StudentID, Name, Course)
+  (1, "Alice", "Math")
+  (1, "Alice", "Physics")
+
+
+Second Normal Form (2NF):
+A relation in 1NF is in 2NF if no non‐key attribute is partially dependent on part of a composite key.
+Example:
+
+-- Violates 2NF (StudentName depends only on StudentID)
+Enrollment(StudentID, CourseID, StudentName, Grade)
+
+Decompose into:
+
+Student(StudentID PK, StudentName)
+Enrollment(StudentID FK, CourseID FK, Grade, PK(StudentID,CourseID))
+
+
+Third Normal Form (3NF):
+A 2NF relation is in 3NF if every non‐key attribute depends only on the key (no transitive dependencies).
+Example:
+
+-- Violates 3NF (DeptName depends on DeptID, not EmpID)
+Employee(EmpID PK, DeptID, DeptName, Salary)
+
+Decompose into:
+
+Department(DeptID PK, DeptName)
+Employee(EmpID PK, DeptID FK, Salary)
+
+
+Boyce–Codd Normal Form (BCNF):
+A 3NF relation is in BCNF if, for every non‐trivial functional dependency X→Y, X is a superkey.
+Example:
+
+-- Violates BCNF because Room→Instructor but Room is not a key
+CourseInstructor(Course, Instructor, Room)
+
+Decompose into:
+
+RoomAssignment(Room PK, Instructor)
+CourseRoom(Course PK, Room FK)
+
+Each step removes a specific kind of redundancy, ensuring that every fact is stored in exactly one place.
+
+====================================================================================
+
+Marking Scheme:
+1
+Define normalization and state the goal of applying normal forms.
+
+2
+1NF & 2NF: for each, state the requirement and give a brief example.
+
+2
+3NF & BCNF: for each, state the requirement and give a brief example.
